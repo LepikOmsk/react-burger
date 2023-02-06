@@ -1,31 +1,43 @@
 import cn from "classnames";
 import styles from "./burger-ingredients.module.css";
 import TabIngredients from "./components/tab-ingrediensts/tab-ingredients";
+import IngredientCategory from "./components/ingredient-category/ingredient-category";
 import data from "../utils/data";
 import Text from "../inscriptions/text";
 import IngredientCard from "./components/ingredient-card/ingredient-card";
 
-const BurgerInegrediends = () => {
-  const ingredients = data
-    .filter((el) => el.type === "bun")
-    .map((el) => <IngredientCard data={el} />);
+const buns = data
+  .filter((el) => el.type === "bun")
+  .map((el) => <IngredientCard data={el} />);
+
+const sauces = data
+  .filter((el) => el.type === "sauce")
+  .map((el) => <IngredientCard data={el} />);
+
+const main = data
+  .filter((el) => el.type === "main")
+  .map((el) => <IngredientCard data={el} />);
+
+const BurgerIngrediends = () => {
   return (
-    <main className={styles.containerIngredients}>
-      <div
-        className="mt-10 mb-5"
-        style={{ display: "flex", justifyContent: "flex-start" }}
-      >
-        <Text type="large" text="Соберите бургер" styles={styles.title} />
+    <section className={styles.containerIngredients}>
+      <div className={cn("mb-5", styles.title)}>
+        <Text type="large" text="Соберите бургер" />
       </div>
       <TabIngredients />
-      <div className="mt-10 mb-6">
-        <Text type="medium" text="Булки" />
-      </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        {ingredients}
-      </div>
-    </main>
+      <ul className={cn("custom-scroll", styles.scroll)}>
+        <li>
+          <IngredientCategory text="Булки" category={buns} />
+        </li>
+        <li>
+          <IngredientCategory text="Соусы" category={sauces} />
+        </li>
+        <li>
+          <IngredientCategory text="Начинки" category={main} />
+        </li>
+      </ul>
+    </section>
   );
 };
 
-export default BurgerInegrediends;
+export default BurgerIngrediends;

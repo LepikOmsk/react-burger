@@ -1,13 +1,10 @@
 .headerContainer {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 88px;
-  margin: 40px 2% 0px 2%;
   background: #1c1c21;
-  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04),
-    0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
-    0px 0px 1px rgba(0, 0, 0, 0.04);
 }
 
 .headerButton {
@@ -27,5 +24,9 @@
 }
 
 .headerLogo {
-  flex: 1;
+  display: flex;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

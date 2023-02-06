@@ -1,0 +1,18 @@
+.container {
+  position: relative;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  column-gap: 8px;
+}
+/* display: "flex", justifyContent: "center", columnGap: "8px" */
+
+.text {
+  justify-content: center;
+
+  align-self: stretch;
+
+  text-align: center;
+}

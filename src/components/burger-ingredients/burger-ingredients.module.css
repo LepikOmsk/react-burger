@@ -1,14 +1,31 @@
 .containerIngredients {
   position: absolute;
   width: 600px;
-  height: 912px;
+  max-height: 100%;
   left: 340px;
   top: 128px;
+  margin-bottom: 40px;
   background: #131316;
   border: 2px solid #4c4cff;
 }
 
 .title {
+  display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+}
+
+ul li {
+  list-style: none;
+}
+
+ul {
+  padding: 0;
+}
+
+.scroll {
+  overflow-y: scroll;
+}
+
+.scroll::-webkit-scrollbar-track {
+  border-radius: 6px;
 }
