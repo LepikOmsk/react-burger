@@ -8,7 +8,7 @@ const IngredientCategory = (props) => {
         <Text type="medium" text={props.text} />
       </div>
 
-      <div className={styles.container}>{props.category}</div>
+      <div className={styles.categoryContainer}>{props.category}</div>
     </>
   );
 };

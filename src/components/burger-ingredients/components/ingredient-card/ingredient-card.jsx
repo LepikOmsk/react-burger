@@ -8,7 +8,7 @@ import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ data }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.cardContainer}>
       <Counter count={1} size="default" extraClass="m-1" />
       <img src={data.image} alt={data.name} />
       <div className={styles.price}>
