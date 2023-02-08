@@ -5,6 +5,7 @@ import {
 import Text from "../../../inscriptions/text";
 import Digits from "../../../inscriptions/digits";
 import styles from "./ingredient-card.module.css";
+import PropTypes from "prop-types";
 
 const IngredientCard = ({ data }) => {
   return (
@@ -20,6 +21,10 @@ const IngredientCard = ({ data }) => {
       </div>
     </div>
   );
+};
+
+IngredientCard.propTypes = {
+  data: PropTypes.object,
 };
 
 export default IngredientCard;

@@ -1,25 +1,29 @@
-.headerContainer {
+.header {
   display: flex;
   position: relative;
-  justify-content: center;
   align-items: center;
-  height: 88px;
+  z-index: 1000;
   background: #1c1c21;
 }
 
-.headerButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap: 8px;
+.headerContainer {
+  margin: 0 auto;
+  max-width: 1272px;
+  padding: 0 16px;
+  width: 100%;
 }
 
 .headerNav {
-  width: 1400px;
+  grid-gap: 8px;
   align-items: center;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, auto) 1fr;
+  margin: 0 -20px;
+}
+
+.account {
+  justify-self: end;
 }
 
 .headerLogo {

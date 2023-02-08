@@ -8,15 +8,15 @@ import IngredientCard from "./components/ingredient-card/ingredient-card";
 
 const buns = data
   .filter((el) => el.type === "bun")
-  .map((el) => <IngredientCard data={el} />);
+  .map((el, i) => <IngredientCard key={i} data={el} />);
 
 const sauces = data
   .filter((el) => el.type === "sauce")
-  .map((el) => <IngredientCard data={el} />);
+  .map((el, i) => <IngredientCard key={i} data={el} />);
 
 const main = data
   .filter((el) => el.type === "main")
-  .map((el) => <IngredientCard data={el} />);
+  .map((el, i) => <IngredientCard key={i} data={el} />);
 
 const BurgerIngrediends = () => {
   return (

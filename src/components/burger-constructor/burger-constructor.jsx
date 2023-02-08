@@ -8,6 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import Digits from "../inscriptions/digits";
+import PropTypes from "prop-types";
 
 const bunTop = (
   <ConstructorElement
@@ -57,7 +58,6 @@ const BurgerConstructor = () => {
         </div>
         <div className={styles.bun}>{bunBottom}</div>
       </div>
-
       <div className={styles.createOrder}>
         <div className={styles.price}>
           <Digits className="mr-5" type="medium" number={610} />
@@ -69,6 +69,13 @@ const BurgerConstructor = () => {
       </div>
     </section>
   );
+};
+
+ConstructorElement.propTypes = {
+  isLocked: PropTypes.bool,
+  type: PropTypes.oneOf(["top", "bottom"]),
+  text: PropTypes.string,
+  price: PropTypes.number,
 };
 
 export default BurgerConstructor;

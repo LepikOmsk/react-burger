@@ -9,9 +9,9 @@ import styles from "./app-header.module.css";
 
 const AppHeader = () => {
   return (
-    <header className={styles.headerContainer}>
-      <nav className={styles.headerNav}>
-        <div className={styles.headerButton}>
+    <header className={styles.header}>
+      <div className={styles.headerContainer}>
+        <nav className={styles.headerNav}>
           <HeaderComponent
             icon={<BurgerIcon type="primary" />}
             text={"Конструктор"}
@@ -23,16 +23,18 @@ const AppHeader = () => {
             text={"Лента заказов"}
             type={"secondary"}
           />
-        </div>
-        <div className={styles.headerLogo}>
-          <Logo />
-        </div>
-        <HeaderComponent
-          icon={<ProfileIcon type="secondary" />}
-          text={"Личный кабинет"}
-          type={"secondary"}
-        />
-      </nav>
+          <div className={styles.headerLogo}>
+            <Logo />
+          </div>
+          <div className={styles.account}>
+            <HeaderComponent
+              icon={<ProfileIcon type="secondary" />}
+              text={"Личный кабинет"}
+              type={"secondary"}
+            />
+          </div>
+        </nav>
+      </div>
     </header>
   );
 };
