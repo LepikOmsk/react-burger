@@ -6,7 +6,7 @@ const IngredientCategory = (props) => {
   return (
     <>
       <div className={styles.title}>
-        <Text type="medium" text={props.text} />
+        <Text size="medium" type="main" text={props.text} />
       </div>
       <div className={styles.categoryContainer}>{props.category}</div>
     </>

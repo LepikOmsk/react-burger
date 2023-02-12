@@ -56,6 +56,11 @@
   flex-direction: row;
 }
 
+.price svg {
+  width: 33px;
+  height: 33px;
+}
+
 .scroll {
   display: flex;
   flex-direction: column;
@@ -70,4 +75,22 @@
 
 .scroll::-webkit-scrollbar-track {
   border-radius: 6px;
+}
+
+/* Информация о заказе */
+
+.orderId {
+  margin-bottom: 32px;
+}
+
+.title {
+  margin-bottom: 60px;
+}
+
+.img {
+  margin-bottom: 60px;
+}
+
+.startCooking {
+  margin-bottom: 8px;
 }

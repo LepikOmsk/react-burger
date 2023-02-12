@@ -8,19 +8,19 @@ import IngredientCard from "./components/ingredient-card/ingredient-card";
 const BurgerIngrediends = ({ ingredients }) => {
   const buns = ingredients
     .filter((el) => el.type === "bun")
-    .map((el, i) => <IngredientCard key={i} data={el} />);
+    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
 
   const sauces = ingredients
     .filter((el) => el.type === "sauce")
-    .map((el, i) => <IngredientCard key={i} data={el} />);
+    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
 
   const main = ingredients
     .filter((el) => el.type === "main")
-    .map((el, i) => <IngredientCard key={i} data={el} />);
+    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
   return (
     <>
       <div className={styles.title}>
-        <Text type="large" text="Соберите бургер" />
+        <Text size="large" type="main" text="Соберите бургер" />
       </div>
       <section className={styles.containerIngredients}>
         <TabIngredients />
