@@ -11,13 +11,16 @@ const Modal = ({ closeModal, children, title }) => {
     <p className={`text text_type_main-large ${styles.title}`}>{title}</p>
   );
 
-  // React.useEffect(() => {
-  //   document.addEventListener('keydown', closeModal)
-
-  //   return () => {
-  //     document.removeEventListener('keydown', closeModal)
-  //   }
-  // }, [])
+  React.useEffect(() => {
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    });
+    return () => {
+      document.removeEventListener("keydown", closeModal);
+    };
+  });
 
   return ReactDOM.createPortal(
     <div onClick={(e) => e.stopPropagation()} className={styles.modalContainer}>
