@@ -22,7 +22,8 @@ function App() {
             isLoading: false,
           }))
         );
-      } else return Promise.reject(`Ошибка ${res.status}`);
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
     });
   }, []);
 

@@ -20,4 +20,8 @@ const IngredientCategory = (props) => {
 //   category: PropTypes.node.arrayOf(PropTypes.dataPropTypes),
 // };
 
+IngredientCategory.propTypes = {
+  category: PropTypes.arrayOf(PropTypes.element),
+};
+
 export default IngredientCategory;
