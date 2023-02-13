@@ -6,6 +6,19 @@ import Text from "../inscriptions/text";
 import IngredientCard from "./components/ingredient-card/ingredient-card";
 
 const BurgerIngrediends = ({ ingredients }) => {
+  //пока почему-то не заработало так, разберусь позже
+  // const {buns, sauces, main} = useMemo(() => {
+  //   const result = {
+  //     buns: [],
+  //     sauces: [],
+  //     main: []
+  //   }
+  //   ingredients.forEach((el, i) => {
+  //     result[el.type].push(<IngredientCard key={i} ingredients={el} />)
+  //   })
+  //   return result
+  // }, [ingredients])
+
   const buns = ingredients
     .filter((el) => el.type === "bun")
     .map((el, i) => <IngredientCard key={i} ingredients={el} />);

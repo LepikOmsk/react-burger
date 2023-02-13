@@ -8,7 +8,7 @@ import styles from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
 import Modal from "../../../modal/modal";
 import { useState } from "react";
-import { dataPropTypes } from "../../../utils/constants";
+import { dataPropTypes } from "../../../../utils/constants";
 
 const IngredientCard = ({ ingredients }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);

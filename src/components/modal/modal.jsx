@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import ReactDOM from "react-dom";
 import ModalOverlay from "./modal-overlay/modal-overlay.jsx";
 import styles from "./modal.module.css";
@@ -11,7 +11,7 @@ const Modal = ({ closeModal, children, title }) => {
     <p className={`text text_type_main-large ${styles.title}`}>{title}</p>
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") {
         closeModal();

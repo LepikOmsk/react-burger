@@ -2,26 +2,28 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngrediends from "../burger-ingredients/burger-ingredients";
 import styles from "../app/app.module.css";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import React from "react";
-import { API_URL } from "../utils/constants";
+import { React, useEffect, useState } from "react";
+import { API_URL } from "../../utils/constants";
 
 function App() {
-  const [fetchIngredients, setFetchIngredients] = React.useState({
+  const [fetchIngredients, setFetchIngredients] = useState({
     ingredients: [],
     isLoading: true,
     hasError: false,
   });
 
-  React.useEffect(() => {
-    fetch(API_URL)
-      .then((res) => res.json())
-      .then((res) =>
-        setFetchIngredients((prev) => ({
-          ...prev,
-          ingredients: res.data,
-          isLoading: false,
-        }))
-      );
+  useEffect(() => {
+    fetch(API_URL).then((res) => {
+      if (res.ok) {
+        return res.json().then((res) =>
+          setFetchIngredients((prev) => ({
+            ...prev,
+            ingredients: res.data,
+            isLoading: false,
+          }))
+        );
+      } else return Promise.reject(`Ошибка ${res.status}`);
+    });
   }, []);
 
   return (

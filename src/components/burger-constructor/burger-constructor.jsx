@@ -10,7 +10,7 @@ import cn from "classnames";
 import Digits from "../inscriptions/digits";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
-import { ORDER_IMG, dataPropTypes } from "../utils/constants";
+import { ORDER_IMG, dataPropTypes } from "../../utils/constants";
 import Text from "../inscriptions/text";
 
 const BurgerConstructor = ({ ingredients }) => {
