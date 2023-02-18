@@ -1,0 +1,73 @@
+.containerConstructor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  row-gap: 40px;
+  grid-area: burgerConstructor;
+  height: 100%;
+}
+
+.burgerConstructor {
+  align-items: flex-end;
+  border-radius: 50px;
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  row-gap: 16px;
+  width: 100%;
+}
+
+.ingredients {
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+}
+
+.bun {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0 16px;
+  width: 100%;
+}
+
+.item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.createOrder {
+  align-items: center;
+  column-gap: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0 16px;
+}
+
+.price {
+  align-items: center;
+  column-gap: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+.scroll {
+  display: flex;
+  flex-direction: column;
+  overflow-y: overlay;
+  gap: 16px 0;
+  padding: 0 16px;
+  inset: 0;
+  width: 100%;
+  position: absolute;
+  border-radius: 50px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  border-radius: 6px;
+}
