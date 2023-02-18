@@ -1,5 +1,5 @@
 import styles from "../burger-constructor/burger-constructor.module.css";
-import { useState, useContext, useEffect } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
 import {
   DragIcon,
   Button,
@@ -9,85 +9,119 @@ import {
 import cn from "classnames";
 import Digits from "../inscriptions/digits";
 import PropTypes from "prop-types";
-import Modal from "../modal/modal";
-import { ORDER_IMG, dataPropTypes } from "../../utils/constants";
-import Text from "../inscriptions/text";
 import { IngredientsContext } from "../../utils/ingredientsContext";
+import OrderDetails from "../order-details/order-details";
+import { ORDER_URL } from "../../utils/constants";
 
 const BurgerConstructor = () => {
   const ingredients = useContext(IngredientsContext);
+
+  const [cart, setCart] = useState({
+    bun: {},
+    ingredients: [],
+  });
+
+  const [order, setOrder] = useState({
+    name: "Название бургера",
+    id: "###",
+  });
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const bunTop = ingredients
-    .filter((el) => el.name === "Краторная булка N-200i")
-    .map((el, i) => (
-      <ConstructorElement
-        isLocked={true}
-        type={"top"}
-        text={el.name + " (верх)"}
-        price={el.price}
-        thumbnail={el.image}
-        key={i}
-      />
-    ));
+  const bun = useMemo(
+    () => ingredients.find((el) => el.name === "Краторная булка N-200i"),
+    [ingredients]
+  );
 
-  const main = ingredients
-    .filter((el) => el.type !== "bun")
-    .map((el, i) => (
-      <ConstructorElement
-        text={el.name}
-        price={el.price}
-        thumbnail={el.image}
-        key={i}
-      />
-    ));
-
-  const bunBottom = ingredients
-    .filter((el) => el.name === "Краторная булка N-200i")
-    .map((el, i) => (
-      <ConstructorElement
-        isLocked={true}
-        type={"bottom"}
-        text={el.name + " (низ)"}
-        price={el.price}
-        thumbnail={el.image}
-        key={i}
-      />
-    ));
+  const main = useMemo(
+    () => ingredients.filter((el) => el.type !== "bun"),
+    [ingredients]
+  );
 
   useEffect(() => {
-    let total = bunTop.price + bunBottom.price;
-    main.map((item) => (total += item.price));
-    setTotalPrice(total);
-  }, [main, setTotalPrice]);
+    setCart({ bun, ingredients: main });
+  }, [bun, main, setCart]);
 
-  console.log(bunTop.price);
-  console.log(totalPrice);
+  const request = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ingredients: [cart.bun._id, ...cart.ingredients.map((el) => el._id)],
+    }),
+  };
+
+  const fetchOrder = () => {
+    fetch(ORDER_URL, request)
+      .then((res) => {
+        if (res.ok) return res.json();
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
+      .then((res) => setOrder({ name: res.name, id: res.order.number }));
+  };
+
+  useEffect(() => {
+    let total =
+      cart.bun.price * 2 +
+      cart.ingredients.reduce((sum, x) => sum + x.price, 0);
+    setTotalPrice(total);
+  }, [cart.bun.price, cart.ingredients, setTotalPrice]);
+
+  const submitOrder = () => {
+    setModalIsOpen(true);
+    fetchOrder();
+  };
 
   return (
     <section className={styles.containerConstructor}>
       <div className={styles.burgerConstructor}>
-        <div className={styles.bun}>{bunTop}</div>
+        <div className={styles.bun}>
+          <ConstructorElement
+            isLocked={true}
+            type={"top"}
+            text={cart.bun.name + " (верх)"}
+            price={cart.bun.price}
+            thumbnail={cart.bun.image}
+          />
+        </div>
         <div className={styles.ingredients}>
           <ul className={cn("custom-scroll", styles.scroll)}>
-            {main.map((el) => (
-              <li className={styles.item}>
+            {cart.ingredients.map((el, i) => (
+              <li key={i} className={styles.item}>
                 <DragIcon type="primary" />
-                {el}
+                <ConstructorElement
+                  text={el.name}
+                  price={el.price}
+                  thumbnail={el.image}
+                />
               </li>
             ))}
           </ul>
         </div>
-        <div className={styles.bun}>{bunBottom}</div>
+        <div className={styles.bun}>
+          <ConstructorElement
+            isLocked={true}
+            type={"bottom"}
+            text={cart.bun.name + " (низ)"}
+            price={cart.bun.price}
+            thumbnail={cart.bun.image}
+          />
+        </div>
       </div>
       <div className={styles.createOrder}>
         <div className={styles.price}>
-          <Digits className="mr-5" type="main" size="medium" number={610} />
+          <Digits
+            className="mr-5"
+            type="main"
+            size="medium"
+            number={totalPrice || 0}
+          />
           <CurrencyIcon type="primary" />
         </div>
         <Button
-          onClick={() => setModalIsOpen(true)}
+          onClick={submitOrder}
           htmlType="button"
           type="primary"
           size="large"
@@ -96,23 +130,11 @@ const BurgerConstructor = () => {
         </Button>
       </div>
       {modalIsOpen && (
-        <Modal closeModal={() => setModalIsOpen(false)}>
-          <div className={styles.orderId}>
-            <Digits size="large" type="main" number="034536" />
-          </div>
-          <div className={styles.title}>
-            <Text size="medium" type="main" text="Идентификатор заказа" />
-          </div>
-          <img className={styles.img} src={ORDER_IMG} alt="Заказ принят" />
-          <div className={styles.startCooking}>
-            <Text size="default" type="main" text="Ваш заказ начали готовить" />
-          </div>
-          <Text
-            size="default"
-            type="inactive"
-            text="Дождитесь готовности на орбитальной станции"
-          />
-        </Modal>
+        <OrderDetails
+          orderName={order.name}
+          orderId={order.id}
+          closeModal={() => setModalIsOpen(false)}
+        />
       )}
     </section>
   );
@@ -124,12 +146,5 @@ ConstructorElement.propTypes = {
   text: PropTypes.string,
   price: PropTypes.number,
 };
-
-// Сделал по аналогии с заданием в тренажере,
-//  почему-то так не работает, прошу помощи
-
-// BurgerConstructor.propTypes = {
-//   ingredients: PropTypes.dataPropTypes,
-// };
 
 export default BurgerConstructor;

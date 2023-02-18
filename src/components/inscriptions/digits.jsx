@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Digits = ({ number, size, type }) => {
+const Digits = ({ number = 0, size = "default", type = "main" }) => {
   return (
     <>
       {type === "main" ? (
@@ -15,7 +15,7 @@ const Digits = ({ number, size, type }) => {
 };
 
 Digits.propTypes = {
-  text: PropTypes.number,
+  number: PropTypes.number,
   size: PropTypes.oneOf(["small", "medium", "large", "default"]),
   type: PropTypes.oneOf(["main", "inactive"]),
 };
