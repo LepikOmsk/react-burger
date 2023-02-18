@@ -5,8 +5,8 @@ import headerStyles from "./header-component.module.css";
 
 const HeaderComponent = ({ icon, text, type }) => {
   return (
-    <div className={headerStyles.component}>
-      <div className="mr-2" children={icon} />
+    <a className={headerStyles.component} href="#">
+      <div className="mr-2"> {icon} </div>
       {type === "primary" ? (
         <p className={cn("text text_type_main-default", headerStyles.text)}>
           {text}
@@ -21,7 +21,7 @@ const HeaderComponent = ({ icon, text, type }) => {
           {text}
         </p>
       )}
-    </div>
+    </a>
   );
 };
 

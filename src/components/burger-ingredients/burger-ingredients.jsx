@@ -2,27 +2,38 @@ import cn from "classnames";
 import styles from "./burger-ingredients.module.css";
 import TabIngredients from "./components/tab-ingredients/tab-ingredients";
 import IngredientCategory from "./components/ingredient-category/ingredient-category";
-import data from "../utils/data";
 import Text from "../inscriptions/text";
 import IngredientCard from "./components/ingredient-card/ingredient-card";
 
-const buns = data
-  .filter((el) => el.type === "bun")
-  .map((el, i) => <IngredientCard key={i} data={el} />);
+const BurgerIngrediends = ({ ingredients }) => {
+  //пока почему-то не заработало так, разберусь позже
+  // const {buns, sauces, main} = useMemo(() => {
+  //   const result = {
+  //     buns: [],
+  //     sauces: [],
+  //     main: []
+  //   }
+  //   ingredients.forEach((el, i) => {
+  //     result[el.type].push(<IngredientCard key={i} ingredients={el} />)
+  //   })
+  //   return result
+  // }, [ingredients])
 
-const sauces = data
-  .filter((el) => el.type === "sauce")
-  .map((el, i) => <IngredientCard key={i} data={el} />);
+  const buns = ingredients
+    .filter((el) => el.type === "bun")
+    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
 
-const main = data
-  .filter((el) => el.type === "main")
-  .map((el, i) => <IngredientCard key={i} data={el} />);
+  const sauces = ingredients
+    .filter((el) => el.type === "sauce")
+    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
 
-const BurgerIngrediends = () => {
+  const main = ingredients
+    .filter((el) => el.type === "main")
+    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
   return (
     <>
       <div className={styles.title}>
-        <Text type="large" text="Соберите бургер" />
+        <Text size="large" type="main" text="Соберите бургер" />
       </div>
       <section className={styles.containerIngredients}>
         <TabIngredients />

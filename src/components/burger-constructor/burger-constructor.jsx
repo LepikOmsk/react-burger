@@ -1,5 +1,5 @@
 import styles from "../burger-constructor/burger-constructor.module.css";
-import data from "../utils/data";
+import { useState } from "react";
 import {
   DragIcon,
   Button,
@@ -9,39 +9,49 @@ import {
 import cn from "classnames";
 import Digits from "../inscriptions/digits";
 import PropTypes from "prop-types";
+import Modal from "../modal/modal";
+import { ORDER_IMG, dataPropTypes } from "../../utils/constants";
+import Text from "../inscriptions/text";
 
-const bunTop = (
-  <ConstructorElement
-    isLocked={true}
-    type={"top"}
-    text="Краторная булка N-200i (верх)"
-    price={1255}
-    thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
-  />
-);
+const BurgerConstructor = ({ ingredients }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const bunTop = ingredients
+    .filter((el) => el.name === "Краторная булка N-200i")
+    .map((el, i) => (
+      <ConstructorElement
+        isLocked={true}
+        type={"top"}
+        text={el.name + " (верх)"}
+        price={el.price}
+        thumbnail={el.image}
+        key={i}
+      />
+    ));
 
-const main = data
-  .filter((el) => el.type !== "bun")
-  .map((el, i) => (
-    <ConstructorElement
-      text={el.name}
-      price={el.price}
-      thumbnail={el.image}
-      key={i}
-    />
-  ));
+  const main = ingredients
+    .filter((el) => el.type !== "bun")
+    .map((el, i) => (
+      <ConstructorElement
+        text={el.name}
+        price={el.price}
+        thumbnail={el.image}
+        key={i}
+      />
+    ));
 
-const bunBottom = (
-  <ConstructorElement
-    isLocked={true}
-    type={"bottom"}
-    text="Краторная булка N-200i (низ)"
-    price={1255}
-    thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
-  />
-);
+  const bunBottom = ingredients
+    .filter((el) => el.name === "Краторная булка N-200i")
+    .map((el, i) => (
+      <ConstructorElement
+        isLocked={true}
+        type={"bottom"}
+        text={el.name + " (низ)"}
+        price={el.price}
+        thumbnail={el.image}
+        key={i}
+      />
+    ));
 
-const BurgerConstructor = () => {
   return (
     <section className={styles.containerConstructor}>
       <div className={styles.burgerConstructor}>
@@ -60,13 +70,37 @@ const BurgerConstructor = () => {
       </div>
       <div className={styles.createOrder}>
         <div className={styles.price}>
-          <Digits className="mr-5" type="medium" number={610} />
+          <Digits className="mr-5" type="main" size="medium" number={610} />
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          onClick={() => setModalIsOpen(true)}
+          htmlType="button"
+          type="primary"
+          size="large"
+        >
           Оформить заказ
         </Button>
       </div>
+      {modalIsOpen && (
+        <Modal closeModal={() => setModalIsOpen(false)}>
+          <div className={styles.orderId}>
+            <Digits size="large" type="main" number="034536" />
+          </div>
+          <div className={styles.title}>
+            <Text size="medium" type="main" text="Идентификатор заказа" />
+          </div>
+          <img className={styles.img} src={ORDER_IMG} alt="Заказ принят" />
+          <div className={styles.startCooking}>
+            <Text size="default" type="main" text="Ваш заказ начали готовить" />
+          </div>
+          <Text
+            size="default"
+            type="inactive"
+            text="Дождитесь готовности на орбитальной станции"
+          />
+        </Modal>
+      )}
     </section>
   );
 };
@@ -77,5 +111,12 @@ ConstructorElement.propTypes = {
   text: PropTypes.string,
   price: PropTypes.number,
 };
+
+// Сделал по аналогии с заданием в тренажере,
+//  почему-то так не работает, прошу помощи
+
+// BurgerConstructor.propTypes = {
+//   ingredients: PropTypes.dataPropTypes,
+// };
 
 export default BurgerConstructor;
