@@ -1,5 +1,5 @@
 import styles from "../burger-constructor/burger-constructor.module.css";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   DragIcon,
   Button,
@@ -12,9 +12,13 @@ import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import { ORDER_IMG, dataPropTypes } from "../../utils/constants";
 import Text from "../inscriptions/text";
+import { IngredientsContext } from "../../utils/ingredientsContext";
 
-const BurgerConstructor = ({ ingredients }) => {
+const BurgerConstructor = () => {
+  const ingredients = useContext(IngredientsContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const bunTop = ingredients
     .filter((el) => el.name === "Краторная булка N-200i")
     .map((el, i) => (
@@ -51,6 +55,15 @@ const BurgerConstructor = ({ ingredients }) => {
         key={i}
       />
     ));
+
+  useEffect(() => {
+    let total = bunTop.price + bunBottom.price;
+    main.map((item) => (total += item.price));
+    setTotalPrice(total);
+  }, [main, setTotalPrice]);
+
+  console.log(bunTop.price);
+  console.log(totalPrice);
 
   return (
     <section className={styles.containerConstructor}>
