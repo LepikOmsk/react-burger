@@ -1,12 +1,12 @@
-import { ORDER_IMG } from "../../utils/constants";
-import Digits from "../inscriptions/digits";
-import Text from "../inscriptions/text";
-import Modal from "../modal/modal";
+import { ORDER_IMG } from "../../../utils/constants";
+import Digits from "../../inscriptions/digits";
+import Text from "../../inscriptions/text";
+
 import styles from "../order-details/order-details.module.css";
 
-const OrderDetails = ({ closeModal, orderId, orderName }) => {
+const OrderDetails = ({ orderId, orderName }) => {
   return (
-    <Modal closeModal={closeModal}>
+    <>
       <div className={styles.orderId}>
         <Digits size="large" type="main" number={orderId} />
       </div>
@@ -22,7 +22,7 @@ const OrderDetails = ({ closeModal, orderId, orderName }) => {
         type="inactive"
         text="Дождитесь готовности на орбитальной станции"
       />
-    </Modal>
+    </>
   );
 };
 

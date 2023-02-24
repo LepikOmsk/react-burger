@@ -10,8 +10,10 @@ import cn from "classnames";
 import Digits from "../inscriptions/digits";
 import PropTypes from "prop-types";
 import { IngredientsContext } from "../../utils/ingredientsContext";
-import OrderDetails from "../order-details/order-details";
+
 import { ORDER_URL } from "../../utils/constants";
+import Modal from "../modal/modal";
+import OrderDetails from "./order-details/order-details";
 
 const BurgerConstructor = () => {
   const ingredients = useContext(IngredientsContext);
@@ -130,11 +132,9 @@ const BurgerConstructor = () => {
         </Button>
       </div>
       {modalIsOpen && (
-        <OrderDetails
-          orderName={order.name}
-          orderId={order.id}
-          closeModal={() => setModalIsOpen(false)}
-        />
+        <Modal closeModal={() => setModalIsOpen(false)}>
+          <OrderDetails orderName={order.name} orderId={order.id} />
+        </Modal>
       )}
     </section>
   );
