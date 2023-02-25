@@ -1,5 +1,5 @@
 import styles from "../burger-constructor/burger-constructor.module.css";
-import { useState, useMemo, useContext, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   DragIcon,
   Button,
@@ -9,14 +9,13 @@ import {
 import cn from "classnames";
 import Digits from "../inscriptions/digits";
 import PropTypes from "prop-types";
-import { IngredientsContext } from "../../utils/ingredientsContext";
-
 import { ORDER_URL } from "../../utils/constants";
 import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
+import { useSelector } from "react-redux";
 
 const BurgerConstructor = () => {
-  const ingredients = useContext(IngredientsContext);
+  const ingredients = useSelector((store) => store.ingredients.data);
 
   const [cart, setCart] = useState({
     bun: {},

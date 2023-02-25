@@ -4,11 +4,12 @@ import TabIngredients from "./components/tab-ingredients/tab-ingredients";
 import IngredientCategory from "./components/ingredient-category/ingredient-category";
 import Text from "../inscriptions/text";
 import IngredientCard from "./components/ingredient-card/ingredient-card";
-import { useContext, useMemo } from "react";
-import { IngredientsContext } from "../../utils/ingredientsContext";
+import { useMemo } from "react";
+
+import { useSelector } from "react-redux";
 
 const BurgerIngrediends = () => {
-  const ingredients = useContext(IngredientsContext);
+  const ingredients = useSelector((store) => store.ingredients.data);
 
   const { bun, sauce, main } = useMemo(() => {
     const result = {
@@ -17,7 +18,7 @@ const BurgerIngrediends = () => {
       main: [],
     };
     ingredients.forEach((el, i) => {
-      result[el.type].push(<IngredientCard key={i} ingredients={el} />);
+      result[el.type].push(<IngredientCard key={i} ingredient={el} />);
     });
     return result;
   }, [ingredients]);
