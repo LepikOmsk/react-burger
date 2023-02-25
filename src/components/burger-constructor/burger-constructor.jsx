@@ -12,19 +12,21 @@ import PropTypes from "prop-types";
 import { ORDER_URL } from "../../utils/constants";
 import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setOrderErrorStatus,
+  setOrderRequestStatus,
+  setOrderSuccessStatus,
+} from "../../redux/actionCreators/orderDetailsActionCreator";
+import { checkReponse } from "../../utils/checkResponse";
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((store) => store.ingredients.data);
+  const dispatch = useDispatch();
 
   const [cart, setCart] = useState({
     bun: {},
     ingredients: [],
-  });
-
-  const [order, setOrder] = useState({
-    name: "Название бургера",
-    id: "###",
   });
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -55,12 +57,12 @@ const BurgerConstructor = () => {
   };
 
   const fetchOrder = () => {
+    dispatch(setOrderRequestStatus());
+
     fetch(ORDER_URL, request)
-      .then((res) => {
-        if (res.ok) return res.json();
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
-      .then((res) => setOrder({ name: res.name, id: res.order.number }));
+      .then((res) => checkReponse(res))
+      .then((res) => dispatch(setOrderSuccessStatus(res)))
+      .catch((error) => dispatch(setOrderErrorStatus()));
   };
 
   useEffect(() => {
@@ -132,7 +134,7 @@ const BurgerConstructor = () => {
       </div>
       {modalIsOpen && (
         <Modal closeModal={() => setModalIsOpen(false)}>
-          <OrderDetails orderName={order.name} orderId={order.id} />
+          <OrderDetails />
         </Modal>
       )}
     </section>

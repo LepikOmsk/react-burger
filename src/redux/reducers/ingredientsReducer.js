@@ -1,6 +1,6 @@
 import {
   INGREDIENTS_ERROR,
-  INGREDIENTS_REQEST,
+  INGREDIENTS_REQUEST,
   INGREDIENTS_SUCCESS,
 } from "../actionTypes/ingredientsActions";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 export const ingredientReducer = (state = initialState, action) => {
   switch (action.type) {
-    case INGREDIENTS_REQEST:
+    case INGREDIENTS_REQUEST:
       return { ...state, isLoading: true, hasError: false };
 
     case INGREDIENTS_SUCCESS:

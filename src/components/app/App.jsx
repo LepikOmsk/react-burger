@@ -8,7 +8,7 @@ import { checkReponse } from "../../utils/checkResponse";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIngredientsErrorStatus,
-  setIngredientsReqestStatus,
+  setIngredientsRequestStatus,
   setIngredientsSuccessStatus,
 } from "../../redux/actionCreators/ingredientsActionCreators";
 
@@ -17,7 +17,7 @@ function App() {
   const { isLoading, hasError } = useSelector((store) => store.ingredients);
 
   useEffect(() => {
-    dispatch(setIngredientsReqestStatus());
+    dispatch(setIngredientsRequestStatus());
 
     fetch(API_URL)
       .then((res) => checkReponse(res))

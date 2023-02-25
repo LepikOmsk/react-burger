@@ -15,7 +15,7 @@ const Digits = ({ number = 0, size = "default", type = "main" }) => {
 };
 
 Digits.propTypes = {
-  number: PropTypes.number,
+  number: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   size: PropTypes.oneOf(["small", "medium", "large", "default"]),
   type: PropTypes.oneOf(["main", "inactive"]),
 };

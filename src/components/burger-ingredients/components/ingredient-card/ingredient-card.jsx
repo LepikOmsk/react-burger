@@ -14,7 +14,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import {
   resetIngredientDetails,
   setIngredientDetails,
-} from "../../../../redux/actionCreators/currentIngredientCreator";
+} from "../../../../redux/actionCreators/currentIngredientActionCreator";
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();

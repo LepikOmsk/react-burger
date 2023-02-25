@@ -1,12 +1,12 @@
 import {
   INGREDIENTS_ERROR,
-  INGREDIENTS_REQEST,
+  INGREDIENTS_REQUEST,
   INGREDIENTS_SUCCESS,
 } from "../actionTypes/ingredientsActions";
 
-export const setIngredientsReqestStatus = () => {
+export const setIngredientsRequestStatus = () => {
   return {
-    type: INGREDIENTS_REQEST,
+    type: INGREDIENTS_REQUEST,
   };
 };
 
