@@ -4,32 +4,24 @@ import TabIngredients from "./components/tab-ingredients/tab-ingredients";
 import IngredientCategory from "./components/ingredient-category/ingredient-category";
 import Text from "../inscriptions/text";
 import IngredientCard from "./components/ingredient-card/ingredient-card";
+import { useContext, useMemo } from "react";
+import { IngredientsContext } from "../../utils/ingredientsContext";
 
-const BurgerIngrediends = ({ ingredients }) => {
-  //пока почему-то не заработало так, разберусь позже
-  // const {buns, sauces, main} = useMemo(() => {
-  //   const result = {
-  //     buns: [],
-  //     sauces: [],
-  //     main: []
-  //   }
-  //   ingredients.forEach((el, i) => {
-  //     result[el.type].push(<IngredientCard key={i} ingredients={el} />)
-  //   })
-  //   return result
-  // }, [ingredients])
+const BurgerIngrediends = () => {
+  const ingredients = useContext(IngredientsContext);
 
-  const buns = ingredients
-    .filter((el) => el.type === "bun")
-    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
+  const { bun, sauce, main } = useMemo(() => {
+    const result = {
+      bun: [],
+      sauce: [],
+      main: [],
+    };
+    ingredients.forEach((el, i) => {
+      result[el.type].push(<IngredientCard key={i} ingredients={el} />);
+    });
+    return result;
+  }, [ingredients]);
 
-  const sauces = ingredients
-    .filter((el) => el.type === "sauce")
-    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
-
-  const main = ingredients
-    .filter((el) => el.type === "main")
-    .map((el, i) => <IngredientCard key={i} ingredients={el} />);
   return (
     <>
       <div className={styles.title}>
@@ -40,10 +32,10 @@ const BurgerIngrediends = ({ ingredients }) => {
         <div className={styles.list}>
           <ul className={cn("custom-scroll", styles.scroll)}>
             <li>
-              <IngredientCategory text="Булки" category={buns} />
+              <IngredientCategory text="Булки" category={bun} />
             </li>
             <li>
-              <IngredientCategory text="Соусы" category={sauces} />
+              <IngredientCategory text="Соусы" category={sauce} />
             </li>
             <li>
               <IngredientCategory text="Начинки" category={main} />
