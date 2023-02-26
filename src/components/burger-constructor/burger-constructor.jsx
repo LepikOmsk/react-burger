@@ -19,11 +19,26 @@ import {
   setOrderSuccessStatus,
 } from "../../redux/actionCreators/orderDetailsActionCreator";
 import { checkReponse } from "../../utils/checkResponse";
+import { setIngredient } from "../../redux/actionCreators/burgerConstructorActionsCreator";
+import { useDrop } from "react-dnd";
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((store) => store.ingredients.data);
+  // const {ingredients, bun, totalPrice} = useSelector((store) => store.constructor.ingredients);
   const dispatch = useDispatch();
 
+  //DnD
+  const [{ isHover }, dropTargerRef] = useDrop({
+    accept: "ingredient",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+
+    drop(item) {
+      dispatch(setIngredient(item));
+    },
+  });
+  //
   const [cart, setCart] = useState({
     bun: {},
     ingredients: [],
@@ -79,7 +94,13 @@ const BurgerConstructor = () => {
 
   return (
     <section className={styles.containerConstructor}>
-      <div className={styles.burgerConstructor}>
+      <div
+        ref={dropTargerRef}
+        className={`
+				${styles.burgerConstructor}
+				${isHover ? styles.onHover : " "}
+			`}
+      >
         <div className={styles.bun}>
           <ConstructorElement
             isLocked={true}

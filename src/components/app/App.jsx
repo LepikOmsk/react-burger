@@ -11,6 +11,9 @@ import {
   setIngredientsRequestStatus,
   setIngredientsSuccessStatus,
 } from "../../redux/actionCreators/ingredientsActionCreators";
+// DnD
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,8 +38,10 @@ function App() {
           <h1>Что-то пошло не так...</h1>
         ) : (
           <>
-            <BurgerIngrediends />
-            <BurgerConstructor />
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngrediends />
+              <BurgerConstructor />
+            </DndProvider>
           </>
         )}
       </main>

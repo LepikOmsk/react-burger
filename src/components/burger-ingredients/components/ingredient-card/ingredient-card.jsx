@@ -15,10 +15,23 @@ import {
   resetIngredientDetails,
   setIngredientDetails,
 } from "../../../../redux/actionCreators/currentIngredientActionCreator";
+import { useDrag } from "react-dnd";
 
 const IngredientCard = ({ ingredient }) => {
+  const { _id, name, price, image } = ingredient;
   const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  //DnD
+  const [{ opacity }, dragRef] = useDrag({
+    type: "ingredient",
+    ingredient: { ...ingredient },
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
+  });
+
+  // console.log(ingredient);
 
   const submitIngredientDetails = () => {
     setModalIsOpen(true);
@@ -41,7 +54,12 @@ const IngredientCard = ({ ingredient }) => {
 
   return (
     <>
-      <div className={styles.cardContainer} onClick={submitIngredientDetails}>
+      <div
+        className={styles.cardContainer}
+        ref={dragRef}
+        style={{ opacity }}
+        onClick={submitIngredientDetails}
+      >
         <Counter count={1} size="default" extraClass="m-1" />
         <img src={ingredient.image} alt={ingredient.name} />
         <div className={styles.price}>
