@@ -1,7 +1,6 @@
 import styles from "../burger-constructor/burger-constructor.module.css";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
-  DragIcon,
   Button,
   CurrencyIcon,
   ConstructorElement,
@@ -11,7 +10,7 @@ import Digits from "../inscriptions/digits";
 import PropTypes from "prop-types";
 import { ORDER_URL } from "../../utils/constants";
 import Modal from "../modal/modal";
-import OrderDetails from "./order-details/order-details";
+import OrderDetails from "./components/order-details/order-details";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setOrderErrorStatus,
@@ -19,13 +18,25 @@ import {
   setOrderSuccessStatus,
 } from "../../redux/actionCreators/orderDetailsActionCreator";
 import { checkReponse } from "../../utils/checkResponse";
-import { setIngredient } from "../../redux/actionCreators/burgerConstructorActionsCreator";
+import {
+  setBun,
+  setIngredient,
+  setTotalPrice,
+} from "../../redux/actionCreators/burgerConstructorActionsCreator";
 import { useDrop } from "react-dnd";
+import EmptyElement from "./components/empty-element/empty-element";
+import ConstructorItem from "./components/constructor-item/constructor-item";
 
 const BurgerConstructor = () => {
-  const ingredients = useSelector((store) => store.ingredients.data);
-  // const {ingredients, bun, totalPrice} = useSelector((store) => store.constructor.ingredients);
+  const { bun, ingredients, totalPrice } = useSelector(
+    (store) => store.burgerConstructor
+  );
   const dispatch = useDispatch();
+
+  //TotalPrice
+  useEffect(() => {
+    dispatch(setTotalPrice());
+  }, [bun, ingredients, dispatch]);
 
   //DnD
   const [{ isHover }, dropTargerRef] = useDrop({
@@ -35,57 +46,37 @@ const BurgerConstructor = () => {
     }),
 
     drop(item) {
-      dispatch(setIngredient(item));
+      if (item) {
+        item.type === "bun"
+          ? dispatch(setBun(item))
+          : dispatch(setIngredient({ ...item, uuid: crypto.randomUUID() }));
+      }
     },
-  });
-  //
-  const [cart, setCart] = useState({
-    bun: {},
-    ingredients: [],
   });
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
 
-  const bun = useMemo(
-    () => ingredients.find((el) => el.name === "Краторная булка N-200i"),
-    [ingredients]
-  );
-
-  const main = useMemo(
-    () => ingredients.filter((el) => el.type !== "bun"),
-    [ingredients]
-  );
-
-  useEffect(() => {
-    setCart({ bun, ingredients: main });
-  }, [bun, main, setCart]);
-
-  const request = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      ingredients: [cart.bun._id, ...cart.ingredients.map((el) => el._id)],
-    }),
-  };
-
+  //   Получение номер и названия заказа
+  // ToDo сделать проверки на наличие булок/ингредиентов if (bun && ingredients.length) {
   const fetchOrder = () => {
     dispatch(setOrderRequestStatus());
+
+    const request = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ingredients: [bun._id, ...ingredients.map((el) => el._id)],
+      }),
+    };
 
     fetch(ORDER_URL, request)
       .then((res) => checkReponse(res))
       .then((res) => dispatch(setOrderSuccessStatus(res)))
       .catch((error) => dispatch(setOrderErrorStatus()));
   };
-
-  useEffect(() => {
-    let total =
-      cart.bun.price * 2 +
-      cart.ingredients.reduce((sum, x) => sum + x.price, 0);
-    setTotalPrice(total);
-  }, [cart.bun.price, cart.ingredients, setTotalPrice]);
+  //-----------------------------------------------------
 
   const submitOrder = () => {
     setModalIsOpen(true);
@@ -102,36 +93,41 @@ const BurgerConstructor = () => {
 			`}
       >
         <div className={styles.bun}>
-          <ConstructorElement
-            isLocked={true}
-            type={"top"}
-            text={cart.bun.name + " (верх)"}
-            price={cart.bun.price}
-            thumbnail={cart.bun.image}
-          />
+          {bun ? (
+            <ConstructorElement
+              isLocked={true}
+              type={"top"}
+              text={bun.name + " (верх)"}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          ) : (
+            <EmptyElement position="top" title="Выберите булку" />
+          )}
         </div>
         <div className={styles.ingredients}>
-          <ul className={cn("custom-scroll", styles.scroll)}>
-            {cart.ingredients.map((el, i) => (
-              <li key={i} className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={el.name}
-                  price={el.price}
-                  thumbnail={el.image}
-                />
-              </li>
-            ))}
-          </ul>
+          {ingredients.length ? (
+            <ul className={cn("custom-scroll", styles.scroll)}>
+              {ingredients.map((el, i) => (
+                <ConstructorItem key={el.uuid} orderId={i} ingredient={el} />
+              ))}
+            </ul>
+          ) : (
+            <EmptyElement title="Добавьте ингридиенты" />
+          )}
         </div>
         <div className={styles.bun}>
-          <ConstructorElement
-            isLocked={true}
-            type={"bottom"}
-            text={cart.bun.name + " (низ)"}
-            price={cart.bun.price}
-            thumbnail={cart.bun.image}
-          />
+          {bun ? (
+            <ConstructorElement
+              isLocked={true}
+              type={"bottom"}
+              text={bun.name + " (низ)"}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          ) : (
+            <EmptyElement position="bottom" title="Выберите булку" />
+          )}
         </div>
       </div>
       <div className={styles.createOrder}>
@@ -140,7 +136,7 @@ const BurgerConstructor = () => {
             className="mr-5"
             type="main"
             size="medium"
-            number={totalPrice || 0}
+            number={totalPrice}
           />
           <CurrencyIcon type="primary" />
         </div>

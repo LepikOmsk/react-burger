@@ -13,6 +13,11 @@
   justify-content: flex-start;
 }
 
+.tab {
+  display: flex;
+  margin-bottom: 40px;
+}
+
 ul li {
   list-style: none;
 }

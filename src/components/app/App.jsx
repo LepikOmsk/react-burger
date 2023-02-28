@@ -1,19 +1,21 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import AppHeader from "../app-header/app-header";
 import BurgerIngrediends from "../burger-ingredients/burger-ingredients";
-import styles from "../app/app.module.css";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useEffect } from "react";
-import { API_URL } from "../../utils/constants";
 import { checkReponse } from "../../utils/checkResponse";
-import { useDispatch, useSelector } from "react-redux";
 import {
   setIngredientsErrorStatus,
   setIngredientsRequestStatus,
   setIngredientsSuccessStatus,
 } from "../../redux/actionCreators/ingredientsActionCreators";
+import { INGREDIENTS_URL } from "../../utils/constants";
 // DnD
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+
+import styles from "../app/app.module.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ function App() {
   useEffect(() => {
     dispatch(setIngredientsRequestStatus());
 
-    fetch(API_URL)
+    fetch(INGREDIENTS_URL)
       .then((res) => checkReponse(res))
       .then((res) => dispatch(setIngredientsSuccessStatus(res.data)))
       .catch((error) => dispatch(setIngredientsErrorStatus()));

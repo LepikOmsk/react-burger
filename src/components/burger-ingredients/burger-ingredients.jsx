@@ -1,15 +1,18 @@
+import { useMemo, useState } from "react";
+import { Link } from "react-scroll";
+import { useSelector } from "react-redux";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import IngredientCategory from "./components/ingredient-category/ingredient-category";
+import IngredientCard from "./components/ingredient-card/ingredient-card";
+import Text from "../inscriptions/text";
+import { ingredientGroups } from "../../utils/ingredientGroups";
 import cn from "classnames";
 import styles from "./burger-ingredients.module.css";
-import TabIngredients from "./components/tab-ingredients/tab-ingredients";
-import IngredientCategory from "./components/ingredient-category/ingredient-category";
-import Text from "../inscriptions/text";
-import IngredientCard from "./components/ingredient-card/ingredient-card";
-import { useMemo } from "react";
-
-import { useSelector } from "react-redux";
 
 const BurgerIngrediends = () => {
   const ingredients = useSelector((store) => store.ingredients.data);
+
+  const [currentTab, setCurrentTab] = useState(ingredientGroups[0].title);
 
   const { bun, sauce, main } = useMemo(() => {
     const result = {
@@ -23,22 +26,41 @@ const BurgerIngrediends = () => {
     return result;
   }, [ingredients]);
 
+  // Навигация по табам
+  const tabList = ingredientGroups.map((tab, i) => (
+    <Link
+      key={i}
+      to={`ingredients-block-${++i}`}
+      spy={true}
+      smooth={true}
+      duration={800}
+      offset={-20}
+      containerId="ingredients"
+      onSetActive={() => setCurrentTab(tab.title)}
+    >
+      <Tab value={tab.title} active={currentTab === tab.title}>
+        {tab.title}
+      </Tab>
+    </Link>
+  ));
+
   return (
     <>
       <div className={styles.title}>
         <Text size="large" type="main" text="Соберите бургер" />
       </div>
       <section className={styles.containerIngredients}>
-        <TabIngredients />
+        <div className={styles.tab}>{tabList} </div>
+
         <div className={styles.list}>
-          <ul className={cn("custom-scroll", styles.scroll)}>
-            <li>
+          <ul id="ingredients" className={cn("custom-scroll", styles.scroll)}>
+            <li id="ingredients-block-1">
               <IngredientCategory text="Булки" category={bun} />
             </li>
-            <li>
+            <li id="ingredients-block-2">
               <IngredientCategory text="Соусы" category={sauce} />
             </li>
-            <li>
+            <li id="ingredients-block-3">
               <IngredientCategory text="Начинки" category={main} />
             </li>
           </ul>

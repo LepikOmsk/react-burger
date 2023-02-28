@@ -7,8 +7,8 @@ import Digits from "../../../inscriptions/digits";
 import styles from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
 import Modal from "../../../modal/modal";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useMemo, useState } from "react";
 import { dataPropTypes } from "../../../../utils/constants";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {
@@ -18,20 +18,28 @@ import {
 import { useDrag } from "react-dnd";
 
 const IngredientCard = ({ ingredient }) => {
-  const { _id, name, price, image } = ingredient;
   const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
+
+  //Counter
+  const count = useMemo(() => {
+    return ingredient.type === "bun"
+      ? bun?._id === ingredient._id
+        ? 2
+        : 0
+      : ingredients.filter((item) => item._id === ingredient._id).length;
+  }, [ingredient, bun, ingredients]);
 
   //DnD
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
-    ingredient: { ...ingredient },
+    item: ingredient,
     collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0.5 : 1,
     }),
   });
-
-  // console.log(ingredient);
+  //-------------------------------
 
   const submitIngredientDetails = () => {
     setModalIsOpen(true);
@@ -47,10 +55,10 @@ const IngredientCard = ({ ingredient }) => {
     );
   };
 
-  // const deleteIngredientDetails = () => {
-  //   setModalIsOpen(false);
-  //   dispatch(resetIngredientDetails);
-  // };
+  const deleteIngredientDetails = () => {
+    setModalIsOpen(false);
+    dispatch(resetIngredientDetails());
+  };
 
   return (
     <>
@@ -60,7 +68,9 @@ const IngredientCard = ({ ingredient }) => {
         style={{ opacity }}
         onClick={submitIngredientDetails}
       >
-        <Counter count={1} size="default" extraClass="m-1" />
+        {count ? (
+          <Counter count={count} size="default" extraClass="m-1" />
+        ) : null}
         <img src={ingredient.image} alt={ingredient.name} />
         <div className={styles.price}>
           <Digits type="main" size="default" number={ingredient.price} />
@@ -71,10 +81,7 @@ const IngredientCard = ({ ingredient }) => {
         </div>
       </div>
       {modalIsOpen && (
-        <Modal
-          title="Детали ингридиента"
-          closeModal={() => setModalIsOpen(false)}
-        >
+        <Modal title="Детали ингридиента" closeModal={deleteIngredientDetails}>
           <IngredientDetails />
         </Modal>
       )}

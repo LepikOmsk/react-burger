@@ -1,6 +1,6 @@
-import { ORDER_IMG } from "../../../utils/constants";
-import Digits from "../../inscriptions/digits";
-import Text from "../../inscriptions/text";
+import { ORDER_IMG } from "../../../../utils/constants";
+import Digits from "../../../inscriptions/digits";
+import Text from "../../../inscriptions/text";
 import { useSelector } from "react-redux";
 import styles from "../order-details/order-details.module.css";
 

@@ -19,6 +19,10 @@
 }
 
 .ingredients {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0 16px;
   flex-grow: 1;
   position: relative;
   width: 100%;
@@ -33,6 +37,7 @@
   width: 100%;
 }
 
+/* !Удалить */
 .item {
   align-items: center;
   display: flex;

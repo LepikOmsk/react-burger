@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
-export const API_URL = "https://norma.nomoreparties.space/api/ingredients";
-export const ORDER_URL = "https://norma.nomoreparties.space/api/orders";
+export const BASE_URL = "https://norma.nomoreparties.space/api/";
+export const INGREDIENTS_URL = `${BASE_URL}ingredients`;
+export const ORDER_URL = `${BASE_URL}orders`;
 
 export const ORDER_IMG =
   "https://stellar-burgers.web.app/static/media/orderDoneSVG.6d4020a51e6d258e72a1298282fd63a7.svg";

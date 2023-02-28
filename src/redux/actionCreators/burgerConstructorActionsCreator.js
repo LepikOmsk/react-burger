@@ -27,7 +27,7 @@ export const removeIngredient = (id) => {
   };
 };
 
-export const reorderIngredient = (ingredients) => {
+export const reorderIngredients = (ingredients) => {
   return {
     type: REORDER_INGREDIENTS,
     ingredients,
