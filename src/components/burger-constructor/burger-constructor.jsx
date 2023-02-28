@@ -8,16 +8,9 @@ import {
 import cn from "classnames";
 import Digits from "../inscriptions/digits";
 import PropTypes from "prop-types";
-import { ORDER_URL } from "../../utils/constants";
 import Modal from "../modal/modal";
 import OrderDetails from "./components/order-details/order-details";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setOrderErrorStatus,
-  setOrderRequestStatus,
-  setOrderSuccessStatus,
-} from "../../redux/actionCreators/orderDetailsActionCreator";
-import { checkReponse } from "../../utils/checkResponse";
 import {
   setBun,
   setIngredient,
@@ -26,12 +19,15 @@ import {
 import { useDrop } from "react-dnd";
 import EmptyElement from "./components/empty-element/empty-element";
 import ConstructorItem from "./components/constructor-item/constructor-item";
+import { setOrder } from "../../redux/actionTypes/burgerConstructorActions";
 
 const BurgerConstructor = () => {
   const { bun, ingredients, totalPrice } = useSelector(
     (store) => store.burgerConstructor
   );
   const dispatch = useDispatch();
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   //TotalPrice
   useEffect(() => {
@@ -54,33 +50,14 @@ const BurgerConstructor = () => {
     },
   });
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  //   Получение номер и названия заказа
-  // ToDo сделать проверки на наличие булок/ингредиентов if (bun && ingredients.length) {
-  const fetchOrder = () => {
-    dispatch(setOrderRequestStatus());
-
-    const request = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ingredients: [bun._id, ...ingredients.map((el) => el._id)],
-      }),
-    };
-
-    fetch(ORDER_URL, request)
-      .then((res) => checkReponse(res))
-      .then((res) => dispatch(setOrderSuccessStatus(res)))
-      .catch((error) => dispatch(setOrderErrorStatus()));
-  };
-  //-----------------------------------------------------
-
   const submitOrder = () => {
+    const orderIngredients = [
+      bun._id,
+      ...ingredients.map((el) => el._id),
+      bun._id,
+    ];
+    dispatch(setOrder(orderIngredients));
     setModalIsOpen(true);
-    fetchOrder();
   };
 
   return (
@@ -142,6 +119,7 @@ const BurgerConstructor = () => {
         </div>
         <Button
           onClick={submitOrder}
+          disabled={!bun || !ingredients.length}
           htmlType="button"
           type="primary"
           size="large"
