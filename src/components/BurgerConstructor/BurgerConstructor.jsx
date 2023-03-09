@@ -1,4 +1,4 @@
-import styles from "../burger-constructor/burger-constructor.module.css";
+import styles from "../BurgerConstructor/BurgerConstructor.module.css";
 import { useState, useEffect } from "react";
 import {
   Button,
@@ -6,10 +6,10 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
-import Digits from "../inscriptions/digits";
+import Digits from "../Inscriptions/Digits";
 import PropTypes from "prop-types";
-import Modal from "../modal/modal";
-import OrderDetails from "./components/order-details/order-details";
+import Modal from "../modal/Modal";
+import OrderDetails from "./components/OrderDetails/OrderDetails";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setBun,
@@ -17,8 +17,8 @@ import {
   setTotalPrice,
 } from "../../redux/actionCreators/burgerConstructorActionsCreator";
 import { useDrop } from "react-dnd";
-import EmptyElement from "./components/empty-element/empty-element";
-import ConstructorItem from "./components/constructor-item/constructor-item";
+import EmptyElement from "./components/EmptyElement/EmptyElement";
+import ConstructorItem from "./components/ConstructorItem/ConstructorItem";
 import { setOrder } from "../../redux/actionTypes/burgerConstructorActions";
 
 const BurgerConstructor = () => {

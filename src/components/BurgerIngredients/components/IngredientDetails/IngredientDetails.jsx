@@ -1,6 +1,6 @@
-import Digits from "../../../inscriptions/digits";
-import Text from "../../../inscriptions/text";
-import styles from "../ingredient-details/ingredient-details.module.css";
+import Digits from "../../../Inscriptions/Digits";
+import Text from "../../../Inscriptions/Text";
+import styles from "../IngredientDetails/IngredientDetails.module.css";
 import { useSelector } from "react-redux";
 
 const IngredientDetails = () => {

@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import AppHeader from "../app-header/app-header";
-import BurgerIngrediends from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import AppHeader from "../AppHeader/AppHeader";
+import BurgerIngrediends from "../BurgerIngredients/BurgerIngredients";
+import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 
 // DnD
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import styles from "../app/app.module.css";
+import styles from "../App/App.module.css";
 import { getIngredients } from "../../redux/actionTypes/ingredientsActions";
 
 function App() {

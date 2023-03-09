@@ -1,8 +1,8 @@
 import { ORDER_IMG } from "../../../../utils/constants";
-import Digits from "../../../inscriptions/digits";
-import Text from "../../../inscriptions/text";
+import Digits from "../../../Inscriptions/Digits";
+import Text from "../../../Inscriptions/Text";
 import { useSelector } from "react-redux";
-import styles from "../order-details/order-details.module.css";
+import styles from "../OrderDetails/OrderDetails.module.css";
 
 const OrderDetails = () => {
   const { name, id } = useSelector((store) => store.order.orderData);

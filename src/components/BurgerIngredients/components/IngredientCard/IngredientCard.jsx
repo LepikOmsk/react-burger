@@ -2,15 +2,13 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import Text from "../../../inscriptions/text";
-import Digits from "../../../inscriptions/digits";
-import styles from "./ingredient-card.module.css";
-import PropTypes from "prop-types";
-import Modal from "../../../modal/modal";
+import Text from "../../../Inscriptions/Text";
+import Digits from "../../../Inscriptions/Digits";
+import styles from "./IngredientCard.module.css";
+import Modal from "../../../modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo, useState } from "react";
-import { dataPropTypes } from "../../../../utils/constants";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import {
   resetIngredientDetails,
   setIngredientDetails,

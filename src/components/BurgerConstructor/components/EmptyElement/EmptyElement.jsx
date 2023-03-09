@@ -1,5 +1,5 @@
-import Text from "../../../inscriptions/text";
-import styles from "../empty-element/empty-element.module.css";
+import Text from "../../../Inscriptions/Text";
+import styles from "../EmptyElement/EmptyElement.module.css";
 
 const EmptyElement = ({ position, title }) => {
   return (

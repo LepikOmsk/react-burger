@@ -10,9 +10,9 @@ import {
   reorderIngredients,
 } from "../../../../redux/actionCreators/burgerConstructorActionsCreator";
 
-import styles from "./constructor-item.module.css";
 import { useDrag, useDrop } from "react-dnd";
 import { sortFunction } from "../../../../utils/sortFunction";
+import styles from "./ConstructorItem.module.css";
 
 const ConstructorItem = ({ ingredient, orderId }) => {
   const dispatch = useDispatch();

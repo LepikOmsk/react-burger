@@ -1,5 +1,5 @@
-import Text from "../../../inscriptions/text";
-import styles from "../ingredient-category/ingredient-category.module.css";
+import Text from "../../../Inscriptions/Text";
+import styles from "../IngredientCategory/IngredientCategory.module.css";
 import PropTypes from "prop-types";
 
 const IngredientCategory = (props) => {

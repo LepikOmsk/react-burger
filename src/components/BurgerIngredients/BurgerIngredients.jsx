@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 import { Link } from "react-scroll";
 import { useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientCategory from "./components/ingredient-category/ingredient-category";
-import IngredientCard from "./components/ingredient-card/ingredient-card";
-import Text from "../inscriptions/text";
+import IngredientCategory from "./components/IngredientCategory/IngredientCategory";
+import IngredientCard from "./components/IngredientCard/IngredientCard";
+import Text from "../Inscriptions/Text";
 import { ingredientGroups } from "../../utils/ingredientGroups";
 import cn from "classnames";
-import styles from "./burger-ingredients.module.css";
+import styles from "./BurgerIngredients.module.css";
 
 const BurgerIngrediends = () => {
   const ingredients = useSelector((store) => store.ingredients.data);

@@ -4,8 +4,8 @@ import {
   ProfileIcon,
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import HeaderComponent from "./header-component/header-component";
-import styles from "./app-header.module.css";
+import HeaderComponent from "./HeaderComponent/HeaderComponent";
+import styles from "./AppHeader.module.css";
 
 const AppHeader = () => {
   return (
