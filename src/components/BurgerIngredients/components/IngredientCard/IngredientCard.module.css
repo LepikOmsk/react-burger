@@ -1,0 +1,23 @@
+.cardContainer {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 4px;
+  cursor: pointer;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.text {
+  justify-content: center;
+  align-self: stretch;
+  text-align: center;
+}
