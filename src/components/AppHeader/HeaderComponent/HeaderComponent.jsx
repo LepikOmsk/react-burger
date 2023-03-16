@@ -1,27 +1,26 @@
 import React from "react";
 import cn from "classnames";
 import PropTypes from "prop-types";
-import headerStyles from "./HeaderComponent.module.css";
+import { NavLink } from "react-router-dom";
+import styles from "./HeaderComponent.module.css";
 
-const HeaderComponent = ({ icon, text, type }) => {
+const HeaderComponent = ({ icon, text, type, path }) => {
   return (
-    <a className={headerStyles.component} href="#">
+    <NavLink to={path} className={styles.component}>
       <div className="mr-2"> {icon} </div>
       {type === "primary" ? (
-        <p className={cn("text text_type_main-default", headerStyles.text)}>
-          {text}
-        </p>
+        <p className={cn("text text_type_main-default", styles.text)}>{text}</p>
       ) : (
         <p
           className={cn(
             "text text_type_main-default text_color_inactive",
-            headerStyles.text
+            styles.text
           )}
         >
           {text}
         </p>
       )}
-    </a>
+    </NavLink>
   );
 };
 

@@ -1,42 +1,32 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
 import AppHeader from "../AppHeader/AppHeader";
-import BurgerIngrediends from "../BurgerIngredients/BurgerIngredients";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
+import { Route, Routes } from "react-router-dom";
 
-// DnD
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
-import styles from "../App/App.module.css";
-import { getIngredients } from "../../redux/actionTypes/ingredientsActions";
+//Страницы
+import ConstructorPage from "../../pages/ConstructorPage/ConstructorPage";
+import ProfilePage from "../../pages/ProfilePage/ProfilePage";
+import LoginPage from "../../pages/LoginPage/LoginPage";
+import ForgotPasswordPage from "../../pages/ForgotPasswordPage/ForgotPasswordPage";
+import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import OrderHistoryPage from "../../pages/OrderHistoryPage/OrderHistoryPage";
+import RegisterPage from "../../pages/RegisterPage/RegisterPage";
+import ProfileInfo from "../../pages/ProfilePage/ProfileInfo";
+import ResetPasswordPage from "../../pages/ResetPasswordPage/ResetPasswordPage";
 
 function App() {
-  const dispatch = useDispatch();
-  const { isLoading, hasError } = useSelector((store) => store.ingredients);
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
   return (
     <>
       <AppHeader />
-      <main className={`container ${styles.mainPage}`}>
-        {isLoading ? (
-          <h1>Загрузка...</h1>
-        ) : hasError ? (
-          <h1>Что-то пошло не так...</h1>
-        ) : (
-          <>
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngrediends />
-              <BurgerConstructor />
-            </DndProvider>
-          </>
-        )}
-      </main>
+      <Routes>
+        <Route path="/" element={<ConstructorPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfileInfo />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/order-history" element={<OrderHistoryPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
     </>
   );
 }

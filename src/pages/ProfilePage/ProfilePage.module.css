@@ -1,0 +1,22 @@
+.main {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  column-gap: 60px;
+}
+
+.aside {
+  padding-top: 80px;
+}
+
+.buttons {
+  padding-top: 80px;
+  margin-bottom: 80px;
+}
+
+.link {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 64px;
+}

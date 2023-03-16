@@ -4,6 +4,7 @@ import {
   ProfileIcon,
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 import HeaderComponent from "./HeaderComponent/HeaderComponent";
 import styles from "./AppHeader.module.css";
 
@@ -17,20 +18,25 @@ const AppHeader = () => {
             text={"Конструктор"}
             type={"primary"}
             className="mr-2"
+            path="/"
           />
           <HeaderComponent
             icon={<ListIcon type="secondary" />}
             text={"Лента заказов"}
             type={"secondary"}
+            path="/order-history"
           />
-          <div className={styles.headerLogo}>
+
+          <Link to="/" className={styles.headerLogo}>
             <Logo />
-          </div>
+          </Link>
+
           <div className={styles.account}>
             <HeaderComponent
               icon={<ProfileIcon type="secondary" />}
               text={"Личный кабинет"}
               type={"secondary"}
+              path="/profile"
             />
           </div>
         </nav>
