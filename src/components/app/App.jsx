@@ -12,13 +12,19 @@ import RegisterPage from "../../pages/RegisterPage/RegisterPage";
 import ProfileInfo from "../../pages/ProfilePage/ProfileInfo";
 import ResetPasswordPage from "../../pages/ResetPasswordPage/ResetPasswordPage";
 import OrderFeedPage from "../../pages/OrderFeedPage/OrderFeedPage";
+import IngredientModal from "../BurgerIngredients/components/IngredientModal/IngredientModal";
+import OrderDetails from "../BurgerConstructor/components/OrderDetails/OrderDetails";
+import IngredientPage from "../../pages/IngredientPage/IngredientPage";
 
 function App() {
-  // const location = useLocation();
+  const location = useLocation();
+
+  const background = location.state && location.state.background;
+
   return (
     <>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         {/* Header Links */}
         <Route path="/" element={<ConstructorPage />} />
         <Route path="/order-feed" element={<OrderFeedPage />} />
@@ -26,6 +32,9 @@ function App() {
           <Route path="/profile/order-history" element={<OrderHistoryPage />} />
           <Route path="/profile" element={<ProfileInfo />} />
         </Route>
+
+        {/* Ingredient Page */}
+        <Route path="/ingredients/:id" element={<IngredientPage />} />
 
         {/* Auth Routes */}
         <Route path="/register" element={<RegisterPage />} />
@@ -36,6 +45,12 @@ function App() {
         {/* Not found page */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      {background && (
+        <Routes>
+          <Route path="/ingredients/:id" element={<IngredientModal />} />
+          <Route path="/order" element={<OrderDetails />} />
+        </Routes>
+      )}
     </>
   );
 }

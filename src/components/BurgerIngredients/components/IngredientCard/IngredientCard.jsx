@@ -1,27 +1,24 @@
+import { useMemo } from "react";
+import { useDrag } from "react-dnd";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import Text from "../../../Inscriptions/Text";
 import Digits from "../../../Inscriptions/Digits";
+
 import styles from "./IngredientCard.module.css";
-import Modal from "../../../modal/Modal";
-import { useDispatch, useSelector } from "react-redux";
-import { useMemo, useState } from "react";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import {
-  resetIngredientDetails,
-  setIngredientDetails,
-} from "../../../../redux/actionCreators/currentIngredientActionCreator";
-import { useDrag } from "react-dnd";
-import { Link } from "react-router-dom";
 
 const IngredientCard = ({ ingredient }) => {
-  const dispatch = useDispatch();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
+  const location = useLocation();
 
   //Counter
+  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
+
   const count = useMemo(() => {
     return ingredient.type === "bun"
       ? bun?._id === ingredient._id
@@ -40,33 +37,14 @@ const IngredientCard = ({ ingredient }) => {
   });
   //-------------------------------
 
-  const submitIngredientDetails = () => {
-    setModalIsOpen(true);
-    dispatch(
-      setIngredientDetails({
-        title: ingredient.name,
-        image: ingredient.image_large,
-        calories: ingredient.calories,
-        proteins: ingredient.proteins,
-        fat: ingredient.fat,
-        carbohydrates: ingredient.carbohydrates,
-      })
-    );
-  };
-
-  const deleteIngredientDetails = () => {
-    setModalIsOpen(false);
-    dispatch(resetIngredientDetails());
-  };
-
   return (
     <>
       <Link
         className={styles.cardContainer}
         ref={dragRef}
         style={{ opacity }}
-        onClick={submitIngredientDetails}
-        state="dewd"
+        state={{ background: location }}
+        to={`/ingredients/${ingredient._id}`}
       >
         {count ? (
           <Counter count={count} size="default" extraClass="m-1" />
@@ -80,20 +58,8 @@ const IngredientCard = ({ ingredient }) => {
           <Text size="default" type="main" text={ingredient.name} />
         </div>
       </Link>
-      {modalIsOpen && (
-        <Modal title="Детали ингридиента" closeModal={deleteIngredientDetails}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </>
   );
 };
-
-// Сделал по аналогии с заданием в тренажере,
-//  почему-то так не работает, прошу помощи
-
-// IngredientCard.propTypes = {
-//   ingredients: PropTypes.dataPropTypes,
-// };
 
 export default IngredientCard;

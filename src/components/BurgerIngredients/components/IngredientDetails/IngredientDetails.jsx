@@ -1,38 +1,86 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
 import Digits from "../../../Inscriptions/Digits";
 import Text from "../../../Inscriptions/Text";
+
+import {
+  resetIngredientDetails,
+  setIngredientDetails,
+} from "../../../../redux/actionCreators/currentIngredientActionCreator";
+import { getIngredients } from "../../../../redux/actionTypes/ingredientsActions";
+
 import styles from "../IngredientDetails/IngredientDetails.module.css";
-import { useSelector } from "react-redux";
 
 const IngredientDetails = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  const ingredient = useSelector((store) => store.ingredients.data).find(
+    (el) => el._id === id
+  );
+
+  const { isLoading, hasError } = useSelector((store) => store.ingredients);
+
+  useEffect(() => {
+    ingredient &&
+      dispatch(
+        setIngredientDetails({
+          title: ingredient.name,
+          image: ingredient.image_large,
+          calories: ingredient.calories,
+          proteins: ingredient.proteins,
+          fat: ingredient.fat,
+          carbohydrates: ingredient.carbohydrates,
+        })
+      );
+    return () => {
+      dispatch(resetIngredientDetails());
+    };
+  }, [ingredient, dispatch]);
+
   const { title, image, calories, proteins, fat, carbohydrates } = useSelector(
     (store) => store.currentIngredient
   );
 
   return (
-    <>
-      <img className={styles.modalImg} src={image} alt={title} />
-      <div className={styles.modalTitle}>
-        <Text size="medium" type="main" text={title} />
-      </div>
-      <ul className={styles.nutrients}>
-        <li className={styles.nutrientsItem}>
-          <Text size="default" type="inactive" text="Калории,ккал" />
-          <Digits size="default" type="inactive" number={calories} />
-        </li>
-        <li className={styles.nutrientsItem}>
-          <Text size="default" type="inactive" text="Белки, г" />
-          <Digits size="default" type="inactive" number={proteins} />
-        </li>
-        <li className={styles.nutrientsItem}>
-          <Text size="default" type="inactive" text="Жиры, г" />
-          <Digits size="default" type="inactive" number={fat} />
-        </li>
-        <li className={styles.nutrientsItem}>
-          <Text size="default" type="inactive" text="Углеводы, г" />
-          <Digits size="default" type="inactive" number={carbohydrates} />
-        </li>
-      </ul>
-    </>
+    <div className={styles.main}>
+      {isLoading ? (
+        <h2>Загрузка...</h2>
+      ) : hasError ? (
+        <h2>Что-то пошло не так...</h2>
+      ) : (
+        <>
+          <img className={styles.img} src={image} alt={title} />
+          <div className={styles.title}>
+            <Text size="medium" type="main" text={title} />
+          </div>
+          <ul className={styles.nutrients}>
+            <li className={styles.nutrientsItem}>
+              <Text size="default" type="inactive" text="Калории,ккал" />
+              <Digits size="default" type="inactive" number={calories} />
+            </li>
+            <li className={styles.nutrientsItem}>
+              <Text size="default" type="inactive" text="Белки, г" />
+              <Digits size="default" type="inactive" number={proteins} />
+            </li>
+            <li className={styles.nutrientsItem}>
+              <Text size="default" type="inactive" text="Жиры, г" />
+              <Digits size="default" type="inactive" number={fat} />
+            </li>
+            <li className={styles.nutrientsItem}>
+              <Text size="default" type="inactive" text="Углеводы, г" />
+              <Digits size="default" type="inactive" number={carbohydrates} />
+            </li>
+          </ul>
+        </>
+      )}
+    </div>
   );
 };
 

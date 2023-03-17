@@ -1,33 +1,36 @@
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
-import { useState, useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
+
+import PropTypes from "prop-types";
+import cn from "classnames";
+
 import {
   Button,
   CurrencyIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import cn from "classnames";
+
 import Digits from "../Inscriptions/Digits";
-import PropTypes from "prop-types";
-import Modal from "../modal/Modal";
-import OrderDetails from "./components/OrderDetails/OrderDetails";
-import { useSelector, useDispatch } from "react-redux";
 import {
   setBun,
   setIngredient,
   setTotalPrice,
 } from "../../redux/actionCreators/burgerConstructorActionsCreator";
-import { useDrop } from "react-dnd";
+import { setOrder } from "../../redux/actionTypes/burgerConstructorActions";
 import EmptyElement from "./components/EmptyElement/EmptyElement";
 import ConstructorItem from "./components/ConstructorItem/ConstructorItem";
-import { setOrder } from "../../redux/actionTypes/burgerConstructorActions";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BurgerConstructor = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { bun, ingredients, totalPrice } = useSelector(
     (store) => store.burgerConstructor
   );
-  const dispatch = useDispatch();
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   //TotalPrice
   useEffect(() => {
@@ -50,15 +53,18 @@ const BurgerConstructor = () => {
     },
   });
 
-  const submitOrder = () => {
+  const submitOrder = useCallback(() => {
+    // if (!isUserLoggedIn) navigate("/login")
+    // else {
     const orderIngredients = [
       bun._id,
       ...ingredients.map((el) => el._id),
       bun._id,
     ];
     dispatch(setOrder(orderIngredients));
-    setModalIsOpen(true);
-  };
+    navigate("/order", { state: { background: location } });
+    // }
+  }, [bun, dispatch, ingredients, location, navigate]);
 
   return (
     <section className={styles.containerConstructor}>
@@ -127,11 +133,6 @@ const BurgerConstructor = () => {
           Оформить заказ
         </Button>
       </div>
-      {modalIsOpen && (
-        <Modal closeModal={() => setModalIsOpen(false)}>
-          <OrderDetails />
-        </Modal>
-      )}
     </section>
   );
 };
