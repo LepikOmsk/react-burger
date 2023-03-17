@@ -14,6 +14,7 @@ import {
   setIngredientDetails,
 } from "../../../../redux/actionCreators/currentIngredientActionCreator";
 import { useDrag } from "react-dnd";
+import { Link } from "react-router-dom";
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
@@ -60,11 +61,12 @@ const IngredientCard = ({ ingredient }) => {
 
   return (
     <>
-      <div
+      <Link
         className={styles.cardContainer}
         ref={dragRef}
         style={{ opacity }}
         onClick={submitIngredientDetails}
+        state="dewd"
       >
         {count ? (
           <Counter count={count} size="default" extraClass="m-1" />
@@ -77,7 +79,7 @@ const IngredientCard = ({ ingredient }) => {
         <div className={styles.text}>
           <Text size="default" type="main" text={ingredient.name} />
         </div>
-      </div>
+      </Link>
       {modalIsOpen && (
         <Modal title="Детали ингридиента" closeModal={deleteIngredientDetails}>
           <IngredientDetails />

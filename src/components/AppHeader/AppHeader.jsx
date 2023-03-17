@@ -13,18 +13,11 @@ const AppHeader = () => {
     <header className={styles.header}>
       <div className={styles.headerContainer}>
         <nav className={styles.headerNav}>
+          <HeaderComponent icon={<BurgerIcon />} text="Конструктор" path="/" />
           <HeaderComponent
-            icon={<BurgerIcon type="primary" />}
-            text={"Конструктор"}
-            type={"primary"}
-            className="mr-2"
-            path="/"
-          />
-          <HeaderComponent
-            icon={<ListIcon type="secondary" />}
-            text={"Лента заказов"}
-            type={"secondary"}
-            path="/order-history"
+            icon={<ListIcon />}
+            text="Лента заказов"
+            path="/order-feed"
           />
 
           <Link to="/" className={styles.headerLogo}>
@@ -33,9 +26,8 @@ const AppHeader = () => {
 
           <div className={styles.account}>
             <HeaderComponent
-              icon={<ProfileIcon type="secondary" />}
-              text={"Личный кабинет"}
-              type={"secondary"}
+              icon={<ProfileIcon />}
+              text="Личный кабинет"
               path="/profile"
             />
           </div>

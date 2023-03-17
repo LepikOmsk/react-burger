@@ -9,7 +9,6 @@
 }
 
 .buttons {
-  padding-top: 80px;
   margin-bottom: 80px;
 }
 
@@ -19,4 +18,16 @@
   justify-content: flex-start;
   align-items: center;
   height: 64px;
+}
+
+.link > p {
+  color: #8585ad;
+}
+
+.link :hover {
+  color: #f2f2f3;
+}
+
+.active > p {
+  color: #f2f2f3;
 }

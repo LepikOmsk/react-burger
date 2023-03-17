@@ -102,4 +102,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default React.memo(ResetPasswordPage);
+export default ResetPasswordPage;

@@ -15,10 +15,10 @@ import styles from "./ProfilePage.module.css";
 const ProfilePage = () => {
   // const dispatch = useDispatch();
 
-  // const className = React.useCallback(
-  //   ({ isActive }) => `${styles.link} ${isActive ? styles.active : ""}`,
-  //   []
-  // );
+  const className = React.useCallback(
+    ({ isActive }) => `${styles.link} ${isActive ? styles.active : ""}`,
+    []
+  );
 
   // const handleLogoutButton = React.useCallback(() => {
   //   dispatch(handleLogout());
@@ -28,11 +28,11 @@ const ProfilePage = () => {
     <main className={`container ${styles.main}`}>
       <aside className={styles.aside}>
         <div className={styles.buttons}>
-          <NavLink className={styles.link} to="/profile" end>
+          <NavLink className={className} to="/profile" end>
             <Text size="medium" type="main" text="Профиль" />
           </NavLink>
 
-          <NavLink className={styles.link} to="/order-history" end>
+          <NavLink className={className} to="/profile/order-history" end>
             <Text size="medium" type="main" text="История заказов" />
           </NavLink>
 

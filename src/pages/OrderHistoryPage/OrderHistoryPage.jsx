@@ -1,7 +1,8 @@
 import React from "react";
+import styles from "./OrderHistoryPage.module.css";
 
 const OrderHistoryPage = () => {
-  return <div>OrderHistoryPage</div>;
+  return <div className={styles.main}>OrderHistoryPage</div>;
 };
 
 export default OrderHistoryPage;
