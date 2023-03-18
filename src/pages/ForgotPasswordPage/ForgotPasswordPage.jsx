@@ -1,46 +1,54 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-// Utils
-// import { forgotPassword } from 'utils/auth/forgotPassword'
-
-// Components
 import LinkWordButton from "../../components/LinkWordButton/LinkWordButton";
 import Text from "../../components/Inscriptions/Text";
 
-//Styles
+import { checkReponse } from "../../utils/checkResponse";
+import { PASSWORD_RESET } from "../../utils/constants";
+
 import styles from "./ForgotPasswordPage.module.css";
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
 
-  const [form, setForm] = React.useState({ email: "" });
+  const [form, setForm] = useState({ email: "" });
 
-  const onChangeEmail = React.useCallback((e) => {
+  const onChangeEmail = useCallback((e) => {
     setForm({ email: e.target.value });
   }, []);
 
-  // Submit form
-  // const submitForm = React.useCallback(
-  //   (e: React.FormEvent) => {
-  //     e.preventDefault()
+  const submitForm = useCallback(
+    (e) => {
+      e.preventDefault();
 
-  //     forgotPassword(form)
-  //       .then(() =>
-  //         navigate(RESET_PASSWORD_LINK, {
-  //           state: { resetPassword: true },
-  //         }),
-  //       )
-  //       .catch((err) => {
-  //         console.log('error')
-  //       })
-  //   },
-  //   [form, navigate],
-  // )
+      const request = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...form,
+        }),
+      };
+      fetch(PASSWORD_RESET, request)
+        .then((res) => checkReponse(res))
+        .then((res) => res)
+        .then(() =>
+          navigate("/reset-password", {
+            state: { resetPassword: true },
+          })
+        )
+        .catch((err) => {
+          console.log("error");
+        });
+    },
+    [form, navigate]
+  );
 
   return (
     <main className={`container ${styles.main}`}>
@@ -48,7 +56,7 @@ const ForgotPasswordPage = () => {
         <Text size="medium" type="main" text="Восстановление пароля" />
       </div>
 
-      <form className={styles.form} onSubmit={""}>
+      <form className={styles.form} onSubmit={submitForm}>
         <EmailInput
           name="email"
           placeholder="Укажите e-mail"

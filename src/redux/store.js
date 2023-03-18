@@ -2,6 +2,7 @@ import { applyMiddleware, compose, createStore } from "redux";
 
 import { combineReducers } from "redux";
 import thunk from "redux-thunk";
+import { authReducer } from "./reducers/authReducer";
 import { burgerConstructorReducer } from "./reducers/burgerConstructorReducer";
 import { currentIngredientReducer } from "./reducers/currentIngredientReducer";
 import { ingredientReducer } from "./reducers/ingredientsReducer";
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   currentIngredient: currentIngredientReducer,
   order: orderDetailsReducer,
   burgerConstructor: burgerConstructorReducer,
+  auth: authReducer,
 });
 
 const composeWithDevTools =

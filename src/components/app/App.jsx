@@ -1,5 +1,15 @@
-import AppHeader from "../AppHeader/AppHeader";
+import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+
+//Redux
+import { useDispatch } from "react-redux";
+import { getUser } from "../../redux/actionTypes/authActions";
+
+//Компоненты
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import AppHeader from "../AppHeader/AppHeader";
+import OrderDetails from "../BurgerConstructor/components/OrderDetails/OrderDetails";
+import IngredientModal from "../BurgerIngredients/components/IngredientModal/IngredientModal";
 
 //Страницы
 import ConstructorPage from "../../pages/ConstructorPage/ConstructorPage";
@@ -12,14 +22,17 @@ import RegisterPage from "../../pages/RegisterPage/RegisterPage";
 import ProfileInfo from "../../pages/ProfilePage/ProfileInfo";
 import ResetPasswordPage from "../../pages/ResetPasswordPage/ResetPasswordPage";
 import OrderFeedPage from "../../pages/OrderFeedPage/OrderFeedPage";
-import IngredientModal from "../BurgerIngredients/components/IngredientModal/IngredientModal";
-import OrderDetails from "../BurgerConstructor/components/OrderDetails/OrderDetails";
 import IngredientPage from "../../pages/IngredientPage/IngredientPage";
 
 function App() {
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const background = location.state && location.state.background;
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   return (
     <>
@@ -28,7 +41,10 @@ function App() {
         {/* Header Links */}
         <Route path="/" element={<ConstructorPage />} />
         <Route path="/order-feed" element={<OrderFeedPage />} />
-        <Route path="/profile" element={<ProfilePage />}>
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<ProfilePage />} />}
+        >
           <Route path="/profile/order-history" element={<OrderHistoryPage />} />
           <Route path="/profile" element={<ProfileInfo />} />
         </Route>
@@ -37,10 +53,26 @@ function App() {
         <Route path="/ingredients/:id" element={<IngredientPage />} />
 
         {/* Auth Routes */}
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/register"
+          element={<ProtectedRoute onlyUnAuth element={<RegisterPage />} />}
+        />
+        <Route
+          path="/login"
+          element={<ProtectedRoute onlyUnAuth element={<LoginPage />} />}
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <ProtectedRoute onlyUnAuth element={<ForgotPasswordPage />} />
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <ProtectedRoute onlyUnAuth element={<ResetPasswordPage />} />
+          }
+        />
 
         {/* Not found page */}
         <Route path="*" element={<NotFoundPage />} />

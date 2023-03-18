@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -10,6 +10,8 @@ import {
 import LinkWordButton from "../../components/LinkWordButton/LinkWordButton";
 import Text from "../../components/Inscriptions/Text";
 
+import { PASSWORD_RESET_REQUEST } from "../../utils/constants";
+
 import styles from "./ResetPasswordPage.module.css";
 
 const ResetPasswordPage = () => {
@@ -20,7 +22,7 @@ const ResetPasswordPage = () => {
     !location?.state?.resetPassword && navigate("/forgot-password");
   }, [location.state, navigate]);
 
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     password: "",
     token: "",
   });
@@ -35,8 +37,7 @@ const ResetPasswordPage = () => {
     [setForm]
   );
 
-  // Password input function
-  const onChangeCode = React.useCallback(
+  const onChangeCode = useCallback(
     (e) => {
       setForm((prev) => ({
         ...prev,
@@ -46,19 +47,28 @@ const ResetPasswordPage = () => {
     [setForm]
   );
 
-  // Submit form
-  // const submitForm = React.useCallback(
-  //   (e) => {
-  //     e.preventDefault()
+  const submitForm = useCallback(
+    (e) => {
+      e.preventDefault();
 
-  //     resetPassword(form)
-  //       .then((res) => navigate(LOGIN_LINK))
-  //       .catch((err) => {
-  //         console.log('error')
-  //       })
-  //   },
-  //   [form, navigate],
-  // )
+      const request = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...form,
+        }),
+      };
+
+      fetch(PASSWORD_RESET_REQUEST, request)
+        .then((res) => navigate("/login"))
+        .catch((err) => {
+          console.log("error");
+        });
+    },
+    [form, navigate]
+  );
 
   return (
     <main className={`container ${styles.main}`}>
@@ -66,7 +76,7 @@ const ResetPasswordPage = () => {
         <Text size="medium" type="main" text="Восстановление пароля" />
       </div>
 
-      <form className={styles.form} onSubmit={""}>
+      <form className={styles.form} onSubmit={submitForm}>
         <PasswordInput
           onChange={onChangePassword}
           value={form.password}

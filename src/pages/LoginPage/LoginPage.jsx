@@ -1,50 +1,50 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   Button,
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
+//Components
 import LinkWordButton from "../../components/LinkWordButton/LinkWordButton";
+import Text from "../../components/Inscriptions/Text";
 
 // Redux
 import { useDispatch } from "react-redux";
-
-// import { handleLogin } from 'redux/actions'
+import { userLogin } from "../../redux/actionTypes/authActions";
 
 import styles from "./LoginPage.module.css";
-import Text from "../../components/Inscriptions/Text";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
 
-  const [login, setLogin] = React.useState({
+  const [login, setLogin] = useState({
     email: "",
     password: "",
   });
 
-  const onChangeEmail = React.useCallback(
+  const onChangeEmail = useCallback(
     (e) => {
       setLogin((prev) => ({ ...prev, email: e.target.value }));
     },
     [setLogin]
   );
 
-  const onChangePassword = React.useCallback(
+  const onChangePassword = useCallback(
     (e) => {
       setLogin((prev) => ({ ...prev, password: e.target.value }));
     },
     [setLogin]
   );
 
-  // Submit form
-  // const submitForm = React.useCallback(
-  //   (e: React.FormEvent) => {
-  //     e.preventDefault()
+  const submitForm = useCallback(
+    (e) => {
+      e.preventDefault();
 
-  //     dispatch(handleLogin(loginForm))
-  //   },
-  //   [dispatch, loginForm],
-  // )
+      dispatch(userLogin(login));
+    },
+    [dispatch, login]
+  );
 
   return (
     <main className={`container ${styles.main}`}>
@@ -52,7 +52,7 @@ const LoginPage = () => {
         <Text size="medium" type="main" text="Вход" />
       </div>
 
-      <form className={styles.form} onSubmit={""}>
+      <form className={styles.form} onSubmit={submitForm}>
         <EmailInput
           name="email"
           placeholder="E-mail"

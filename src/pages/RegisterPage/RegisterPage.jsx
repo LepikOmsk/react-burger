@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import {
   Button,
   Input,
@@ -8,7 +8,7 @@ import {
 
 // Redux
 import { useDispatch } from "react-redux";
-// import { handleRegister } from "redux/actions";
+import { userRegister } from "../../redux/actionTypes/authActions";
 
 // Components
 import LinkWordButton from "../../components/LinkWordButton/LinkWordButton";
@@ -20,43 +20,40 @@ import styles from "./RegisterPage.module.css";
 const RegisterPage = () => {
   const dispatch = useDispatch();
 
-  // Form state
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  const onChangeName = React.useCallback(
+  const onChangeName = useCallback(
     (e) => {
       setForm((prev) => ({ ...prev, name: e.target.value }));
     },
     [setForm]
   );
 
-  const onChangeEmail = React.useCallback(
+  const onChangeEmail = useCallback(
     (e) => {
       setForm((prev) => ({ ...prev, email: e.target.value }));
     },
     [setForm]
   );
 
-  const onChangePassword = React.useCallback(
+  const onChangePassword = useCallback(
     (e) => {
       setForm((prev) => ({ ...prev, password: e.target.value }));
     },
     [setForm]
   );
 
-  // Submit form
-  // const submitForm = React.useCallback(
-  //   (e: React.FormEvent) => {
-  //     e.preventDefault()
-
-  //     dispatch(handleRegister(form))
-  //   },
-  //   [dispatch, form],
-  // )
+  const submitForm = React.useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(userRegister(form));
+    },
+    [dispatch, form]
+  );
 
   return (
     <main className={`container ${styles.main}`}>
@@ -64,7 +61,7 @@ const RegisterPage = () => {
         <Text size="medium" type="main" text="Регистрация" />
       </div>
 
-      <form className={styles.form} onSubmit={""}>
+      <form className={styles.form} onSubmit={submitForm}>
         <Input
           type="text"
           placeholder="Имя"

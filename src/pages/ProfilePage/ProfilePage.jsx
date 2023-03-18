@@ -1,28 +1,26 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+
 import Text from "../../components/Inscriptions/Text";
 
 // Redux
-// import { useDispatch } from "redux/store";
-// import { handleLogout } from "redux/actions";
-
-// Routes
-// import { PROFILE_LINK, PROFILE_ORDERS_LINK } from "utils/constants";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../../redux/actionTypes/authActions";
 
 // Styles
 import styles from "./ProfilePage.module.css";
 
 const ProfilePage = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const className = React.useCallback(
+  const className = useCallback(
     ({ isActive }) => `${styles.link} ${isActive ? styles.active : ""}`,
     []
   );
 
-  // const handleLogoutButton = React.useCallback(() => {
-  //   dispatch(handleLogout());
-  // }, [dispatch]);
+  const logout = React.useCallback(() => {
+    dispatch(userLogout());
+  }, [dispatch]);
 
   return (
     <main className={`container ${styles.main}`}>
@@ -36,7 +34,7 @@ const ProfilePage = () => {
             <Text size="medium" type="main" text="История заказов" />
           </NavLink>
 
-          <button className={styles.link}>
+          <button className={styles.link} onClick={logout}>
             <Text size="medium" type="main" text="Выход" />
           </button>
         </div>

@@ -1,39 +1,36 @@
+import React, { useState, useMemo } from "react";
 import {
   Button,
   EmailInput,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useState } from "react";
 
 // Redux
-// import { useDispatch, useSelector } from 'redux/store'
-// import { authUserSelector } from 'redux/selectors'
-// import { setUser } from 'redux/actions/authActions'
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/actionTypes/authActions";
 
 // Styles
 import styles from "./ProfileInfo.module.css";
 
 const ProfileInfo = () => {
-  // const dispatch = useDispatch()
-  // const { name, email } = useSelector(authUserSelector)
+  const dispatch = useDispatch();
 
-  // Form state
+  const { name, email } = useSelector((store) => store.auth.user);
+
   const formInitial = {
-    name: "",
-    email: "",
+    name,
+    email,
     password: "",
   };
 
   const [form, setForm] = useState(formInitial);
 
-  // Display buttons
-  const isEdit = React.useMemo(
-    () => form.name !== "" || form.email !== "" || !!form.password,
-    [form]
+  const isEdit = useMemo(
+    () => form.name !== name || form.email !== email || !!form.password,
+    [name, email, form]
   );
 
-  // Name input function
   const onChangeName = (e) => {
     setForm((prev) => ({
       ...prev,
@@ -41,7 +38,6 @@ const ProfileInfo = () => {
     }));
   };
 
-  // Email input function
   const onChangeEmail = (e) => {
     setForm((prev) => ({
       ...prev,
@@ -49,7 +45,6 @@ const ProfileInfo = () => {
     }));
   };
 
-  // Password input function
   const onChangePassword = (e) => {
     setForm((prev) => ({
       ...prev,
@@ -57,20 +52,18 @@ const ProfileInfo = () => {
     }));
   };
 
-  // Cancel function
-  const handleCancelButton = () => {
+  const cancelButton = () => {
     setForm(formInitial);
   };
 
-  // Submit function
-  // const submitForm = (e) => {
-  //   e.preventDefault()
+  const submitForm = (e) => {
+    e.preventDefault();
 
-  //   dispatch(setUser(form))
-  // }
+    dispatch(setUser(form));
+  };
 
   return (
-    <form className={styles.main} onSubmit={""}>
+    <form className={styles.main} onSubmit={submitForm}>
       <Input
         type="text"
         placeholder="Имя"
@@ -104,7 +97,7 @@ const ProfileInfo = () => {
             htmlType="button"
             type="secondary"
             size="medium"
-            onClick={handleCancelButton}
+            onClick={cancelButton}
           >
             Отмена
           </Button>

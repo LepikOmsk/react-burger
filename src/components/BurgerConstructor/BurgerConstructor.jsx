@@ -32,6 +32,8 @@ const BurgerConstructor = () => {
     (store) => store.burgerConstructor
   );
 
+  const isUserLoggedIn = useSelector((store) => store.auth.user.isLoggedIn);
+
   //TotalPrice
   useEffect(() => {
     dispatch(setTotalPrice());
@@ -54,17 +56,17 @@ const BurgerConstructor = () => {
   });
 
   const submitOrder = useCallback(() => {
-    // if (!isUserLoggedIn) navigate("/login")
-    // else {
-    const orderIngredients = [
-      bun._id,
-      ...ingredients.map((el) => el._id),
-      bun._id,
-    ];
-    dispatch(setOrder(orderIngredients));
-    navigate("/order", { state: { background: location } });
-    // }
-  }, [bun, dispatch, ingredients, location, navigate]);
+    if (!isUserLoggedIn) navigate("/login");
+    else {
+      const orderIngredients = [
+        bun._id,
+        ...ingredients.map((el) => el._id),
+        bun._id,
+      ];
+      dispatch(setOrder(orderIngredients));
+      navigate("/order", { state: { background: location } });
+    }
+  }, [bun, dispatch, ingredients, isUserLoggedIn, location, navigate]);
 
   return (
     <section className={styles.containerConstructor}>
