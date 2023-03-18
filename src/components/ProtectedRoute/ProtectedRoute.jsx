@@ -8,7 +8,7 @@ const ProtectedRoute = ({ element, onlyUnAuth = false }) => {
   const location = useLocation();
   const isLoggedIn = useSelector((store) => store.auth.user.isLoggedIn);
 
-  const isLoading = useSelector((store) => store.auth);
+  const { isLoading } = useSelector((store) => store.auth);
 
   if (isLoading) return <div> Загрузка... </div>;
 
