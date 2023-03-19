@@ -9,17 +9,12 @@ import {
   resetIngredientDetails,
   setIngredientDetails,
 } from "../../../../redux/actionCreators/currentIngredientActionCreator";
-import { getIngredients } from "../../../../redux/actionTypes/ingredientsActions";
 
 import styles from "../IngredientDetails/IngredientDetails.module.css";
 
 const IngredientDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   const ingredient = useSelector((store) => store.ingredients.data).find(
     (el) => el._id === id

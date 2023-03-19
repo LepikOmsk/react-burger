@@ -21,7 +21,7 @@ const BurgerIngrediends = () => {
       main: [],
     };
     ingredients.forEach((el, i) => {
-      result[el.type].push(<IngredientCard key={i} ingredient={el} />);
+      result[el.type].push(<IngredientCard key={el._id} ingredient={el} />);
     });
     return result;
   }, [ingredients]);

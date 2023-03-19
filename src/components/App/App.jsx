@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 //Redux
 import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/actionTypes/authActions";
+import { getIngredients } from "../../redux/actionTypes/ingredientsActions";
 
 //Компоненты
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -32,6 +33,10 @@ function App() {
 
   useEffect(() => {
     dispatch(getUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getIngredients());
   }, [dispatch]);
 
   return (

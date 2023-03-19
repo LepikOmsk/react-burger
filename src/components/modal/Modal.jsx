@@ -23,16 +23,27 @@ const Modal = ({ children, title }) => {
   }, [location.state, navigate]);
 
   // Закрытие по нажатию на Esc
+  // useEffect(() => {
+  //   document.addEventListener("keydown", function (e) {
+  //     if (e.key === "Escape") {
+  //       closeModal();
+  //     }
+  //   });
+  //   return () => {
+  //     document.removeEventListener("keydown", closeModal);
+  //   };
+  // });
   useEffect(() => {
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") {
+    function closeByEscape(evt) {
+      if (evt.key === "Escape") {
         closeModal();
       }
-    });
+    }
+    document.addEventListener("keydown", closeByEscape);
     return () => {
-      document.removeEventListener("keydown", closeModal);
+      document.removeEventListener("keydown", closeByEscape);
     };
-  });
+  }, [closeModal]);
 
   const modalRoot = React.useMemo(() => document.getElementById("modal"), []);
 

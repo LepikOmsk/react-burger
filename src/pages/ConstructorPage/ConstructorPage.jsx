@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import BurgerIngrediends from "../../components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
@@ -8,16 +7,11 @@ import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstruc
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { getIngredients } from "../../redux/actionTypes/ingredientsActions";
 import styles from "./ConstructorPage.module.css";
 
 const ConstructorPage = () => {
-  const dispatch = useDispatch();
   const { isLoading, hasError } = useSelector((store) => store.ingredients);
 
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
   return (
     <main className={`container ${styles.mainPage}`}>
       {isLoading ? (
