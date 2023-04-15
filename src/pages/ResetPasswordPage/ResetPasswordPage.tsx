@@ -11,6 +11,7 @@ import LinkWordButton from "../../components/LinkWordButton/LinkWordButton";
 import Text from "../../components/Inscriptions/Text";
 
 import { PASSWORD_RESET_REQUEST } from "../../utils/constants";
+import { customFetch, IRequestCreator } from "../../utils/customFetch";
 
 import styles from "./ResetPasswordPage.module.css";
 
@@ -51,17 +52,12 @@ const ResetPasswordPage: React.FC = () => {
     (e: React.FormEvent) => {
       e.preventDefault();
 
-      const request = {
+      const request: IRequestCreator = {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...form,
-        }),
+        body: { ...form },
       };
 
-      fetch(PASSWORD_RESET_REQUEST, request)
+      customFetch(PASSWORD_RESET_REQUEST, request)
         .then((res) => navigate("/login"))
         .catch((err) => {
           console.log("error");

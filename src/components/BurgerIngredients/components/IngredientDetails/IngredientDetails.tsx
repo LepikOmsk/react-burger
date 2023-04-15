@@ -18,61 +18,63 @@ const IngredientDetails: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const ingredient = useSelector((store) => store.ingredients.data).find(
+  const ingredient = useSelector((store) => store.ingredients.data)?.find(
     (el: TIngredient) => el._id === id
   );
 
   const { isLoading, hasError } = useSelector((store) => store.ingredients);
 
   useEffect(() => {
-    ingredient &&
-      dispatch(
-        setIngredientDetails({
-          title: ingredient.name,
-          image: ingredient.image_large,
-          calories: ingredient.calories,
-          proteins: ingredient.proteins,
-          fat: ingredient.fat,
-          carbohydrates: ingredient.carbohydrates,
-        })
-      );
+    ingredient && dispatch(setIngredientDetails(ingredient));
     return () => {
       dispatch(resetIngredientDetails());
     };
   }, [ingredient, dispatch]);
 
-  const { title, image, calories, proteins, fat, carbohydrates } = useSelector(
-    (store) => store.currentIngredient
-  );
-
   return (
     <div className={styles.main}>
       {isLoading ? (
         <h2>Загрузка...</h2>
-      ) : hasError ? (
+      ) : hasError || !ingredient ? (
         <h2>Что-то пошло не так...</h2>
       ) : (
         <>
-          <img className={styles.img} src={image} alt={title} />
+          <img
+            className={styles.img}
+            src={ingredient.image}
+            alt={ingredient.name}
+          />
           <div className={styles.title}>
-            <Text size="medium" type="main" text={title} />
+            <Text size="medium" type="main" text={ingredient.name} />
           </div>
           <ul className={styles.nutrients}>
             <li className={styles.nutrientsItem}>
               <Text size="default" type="inactive" text="Калории,ккал" />
-              <Digits size="default" type="inactive" number={calories} />
+              <Digits
+                size="default"
+                type="inactive"
+                number={ingredient.calories}
+              />
             </li>
             <li className={styles.nutrientsItem}>
               <Text size="default" type="inactive" text="Белки, г" />
-              <Digits size="default" type="inactive" number={proteins} />
+              <Digits
+                size="default"
+                type="inactive"
+                number={ingredient.proteins}
+              />
             </li>
             <li className={styles.nutrientsItem}>
               <Text size="default" type="inactive" text="Жиры, г" />
-              <Digits size="default" type="inactive" number={fat} />
+              <Digits size="default" type="inactive" number={ingredient.fat} />
             </li>
             <li className={styles.nutrientsItem}>
               <Text size="default" type="inactive" text="Углеводы, г" />
-              <Digits size="default" type="inactive" number={carbohydrates} />
+              <Digits
+                size="default"
+                type="inactive"
+                number={ingredient.carbohydrates}
+              />
             </li>
           </ul>
         </>

@@ -29,7 +29,7 @@ const IngredientCard: React.FC<IIngredientCard> = ({ ingredient }) => {
       ? bun?._id === ingredient._id
         ? 2
         : 0
-      : ingredients.filter((item: TIngredient) => item._id === ingredient._id)
+      : ingredients?.filter((item: TIngredient) => item._id === ingredient._id)
           .length;
   }, [ingredient, bun, ingredients]);
 

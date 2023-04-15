@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../redux/store";
 import { getUser } from "../../redux/actionTypes/authActions";
 import { getIngredients } from "../../redux/actionTypes/ingredientsActions";
 
@@ -35,11 +35,8 @@ const App: React.FC = () => {
   const background = location.state && location.state.background;
 
   React.useEffect(() => {
-    dispatch<any>(getUser());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch<any>(getIngredients());
+    dispatch(getUser());
+    dispatch(getIngredients());
   }, [dispatch]);
 
   return (

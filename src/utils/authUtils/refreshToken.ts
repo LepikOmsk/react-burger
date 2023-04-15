@@ -1,28 +1,30 @@
 import { saveTokens } from "./saveTokens";
 import { AUTH_TOKEN } from "../constants";
-import { checkReponse } from "../checkResponse";
+import { customFetch, IRequestCreator } from "../customFetch";
+
+export interface IRefreshTokensResponse {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+}
 
 export const refreshToken = async () => {
-  const request = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      token: localStorage.getItem("refreshToken"),
-    }),
-  };
+  const refreshToken = localStorage.getItem("refreshToken");
 
-  await fetch(AUTH_TOKEN, request)
-    .then((res) =>
-      checkReponse<{ accessToken: string; refreshToken: string }>(res)
-    )
-    .then((res) => {
-      saveTokens(res.accessToken, res.refreshToken);
+  if (refreshToken) {
+    const request: IRequestCreator = {
+      method: "POST",
+      body: { token: refreshToken },
+    };
 
-      return res;
-    })
-    .catch((err) => {
-      console.log("refresh token error");
-    });
+    await customFetch<IRefreshTokensResponse>(AUTH_TOKEN, request)
+      .then((res) => {
+        saveTokens(res.accessToken, res.refreshToken);
+
+        return res;
+      })
+      .catch(() => {
+        console.log("refresh token error");
+      });
+  }
 };

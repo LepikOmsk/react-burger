@@ -8,8 +8,8 @@ import {
 import LinkWordButton from "../../components/LinkWordButton/LinkWordButton";
 import Text from "../../components/Inscriptions/Text";
 
-import { checkReponse } from "../../utils/checkResponse";
 import { PASSWORD_RESET } from "../../utils/constants";
+import { customFetch, IRequestCreator } from "../../utils/customFetch";
 
 import styles from "./ForgotPasswordPage.module.css";
 
@@ -29,24 +29,18 @@ const ForgotPasswordPage: React.FC = () => {
     (e: React.FormEvent) => {
       e.preventDefault();
 
-      const request = {
+      const request: IRequestCreator = {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...form,
-        }),
+        body: { ...form },
       };
-      fetch(PASSWORD_RESET, request)
-        .then((res) => checkReponse(res))
+      customFetch(PASSWORD_RESET, request)
         .then((res) => res)
         .then(() =>
           navigate("/reset-password", {
             state: { resetPassword: true },
           })
         )
-        .catch((err) => {
+        .catch(() => {
           console.log("error");
         });
     },

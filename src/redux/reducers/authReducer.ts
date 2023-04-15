@@ -1,22 +1,62 @@
-import {
-  GET_USER_ERROR,
-  GET_USER_REQUEST,
-  GET_USER_SUCCESS,
-  LOGIN_ERROR,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGOUT_ERROR,
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  REGISTER_ERROR,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  SET_USER_ERROR,
-  SET_USER_REQUEST,
-  SET_USER_SUCCESS,
-} from "../actionTypes/authActions";
+import { AuthStatus, TAuthActions } from "../actionTypes/authActions";
 
-const initialState = {
+export type TAuthUser = {
+  name: string;
+  email: string;
+  isLoggedIn: boolean;
+};
+
+export type TAuthRegister = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type TAuthLogin = {
+  email: string;
+  password: string;
+};
+
+export type TAuthState = {
+  user: TAuthUser;
+  isLoading: boolean;
+  hasError: boolean;
+};
+
+export interface IRegisterResponse {
+  success: boolean;
+  user: {
+    email: string;
+    name: string;
+  };
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface ILoginResponse {
+  success: boolean;
+  user: {
+    email: string;
+    name: string;
+  };
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface ILogoutResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface IUserResponse {
+  success: boolean;
+  user: {
+    email: string;
+    name: string;
+  };
+}
+
+const initialState: TAuthState = {
   user: {
     name: "",
     email: "",
@@ -26,12 +66,15 @@ const initialState = {
   hasError: false,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (
+  state = initialState,
+  action: TAuthActions
+): TAuthState => {
   switch (action.type) {
-    case REGISTER_REQUEST:
+    case AuthStatus.REGISTER_REQUEST:
       return { ...state, isLoading: true, hasError: false };
 
-    case REGISTER_SUCCESS:
+    case AuthStatus.REGISTER_SUCCESS:
       return {
         ...state,
         user: {
@@ -43,13 +86,13 @@ export const authReducer = (state = initialState, action) => {
         isLoading: false,
       };
 
-    case REGISTER_ERROR:
+    case AuthStatus.REGISTER_ERROR:
       return { ...state, isLoading: false, hasError: true };
 
-    case LOGIN_REQUEST:
+    case AuthStatus.LOGIN_REQUEST:
       return { ...state, isLoading: true, hasError: false };
 
-    case LOGIN_SUCCESS:
+    case AuthStatus.LOGIN_SUCCESS:
       return {
         ...state,
         user: {
@@ -61,25 +104,25 @@ export const authReducer = (state = initialState, action) => {
         isLoading: false,
       };
 
-    case LOGIN_ERROR:
+    case AuthStatus.LOGIN_ERROR:
       return { ...state, isLoading: false, hasError: true };
 
-    case LOGOUT_REQUEST:
+    case AuthStatus.LOGOUT_REQUEST:
       return { ...state, isLoading: true, hasError: false };
 
-    case LOGOUT_SUCCESS:
+    case AuthStatus.LOGOUT_SUCCESS:
       return {
         ...state,
         ...initialState,
       };
 
-    case LOGOUT_ERROR:
+    case AuthStatus.LOGOUT_ERROR:
       return { ...state, isLoading: false, hasError: true };
 
-    case GET_USER_REQUEST:
+    case AuthStatus.GET_USER_REQUEST:
       return { ...state, isLoading: true, hasError: false };
 
-    case GET_USER_SUCCESS:
+    case AuthStatus.GET_USER_SUCCESS:
       return {
         ...state,
         user: {
@@ -91,17 +134,17 @@ export const authReducer = (state = initialState, action) => {
         isLoading: false,
       };
 
-    case GET_USER_ERROR:
+    case AuthStatus.GET_USER_ERROR:
       return {
         ...initialState,
         isLoading: false,
         hasError: true,
       };
 
-    case SET_USER_REQUEST:
+    case AuthStatus.SET_USER_REQUEST:
       return { ...state, isLoading: true, hasError: false };
 
-    case SET_USER_SUCCESS:
+    case AuthStatus.SET_USER_SUCCESS:
       return {
         ...state,
         user: {
@@ -112,7 +155,7 @@ export const authReducer = (state = initialState, action) => {
         isLoading: false,
       };
 
-    case SET_USER_ERROR:
+    case AuthStatus.SET_USER_ERROR:
       return {
         ...initialState,
         isLoading: false,

@@ -12,11 +12,10 @@ import { ingredientGroups } from "../../utils/ingredientGroups";
 
 import styles from "./BurgerIngredients.module.css";
 import { TIngredient } from "../../utils/types/ingredientType";
+import { ingredientsDataSelector } from "../../redux/selectors/ingredientsSelector";
 
 const BurgerIngrediends = () => {
-  const ingredients: TIngredient[] = useSelector(
-    (store) => store.ingredients.data
-  );
+  const ingredients = useSelector(ingredientsDataSelector);
 
   const [currentTab, setCurrentTab] = useState(ingredientGroups[0].title);
 
@@ -26,7 +25,7 @@ const BurgerIngrediends = () => {
       sauce: [],
       main: [],
     };
-    ingredients.forEach((el) => {
+    ingredients?.forEach((el) => {
       result[el.type].push(el);
     });
     return result;

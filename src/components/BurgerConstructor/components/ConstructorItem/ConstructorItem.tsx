@@ -78,17 +78,22 @@ const ConstructorItem: React.FC<TConstructorItem> = ({
         return;
       }
 
-      dispatch(
-        reorderIngredients(
-          sortFunction<TIngredient>(ingredients, dragIndex, hoverIndex)
-        )
-      );
-
+      if (ingredients) {
+        dispatch(
+          reorderIngredients(
+            sortFunction<TIngredient>(ingredients, dragIndex, hoverIndex)
+          )
+        );
+      }
       item.orderId = hoverIndex;
     },
   });
 
   dragSortRef(dropSortRef(itemRef));
+
+  function deleteIngredient() {
+    if (ingredient.uuid) dispatch(removeIngredient(ingredient.uuid));
+  }
 
   return (
     <li
@@ -101,7 +106,7 @@ const ConstructorItem: React.FC<TConstructorItem> = ({
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={() => dispatch(removeIngredient(ingredient.uuid))}
+        handleClose={deleteIngredient}
       />
     </li>
   );

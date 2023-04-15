@@ -1,5 +1,5 @@
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
-import { useCallback, useEffect } from "react";
+import { useMemo, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useSelector } from "../../redux/store";
@@ -16,9 +16,9 @@ import Digits from "../Inscriptions/Digits";
 import {
   setBun,
   setIngredient,
-  setTotalPrice,
 } from "../../redux/actionCreators/burgerConstructorActionsCreator";
-import { setOrder } from "../../redux/actionTypes/burgerConstructorActions";
+import { setOrder } from "../../redux/actionTypes/orderDetailsActions";
+
 import EmptyElement from "./components/EmptyElement/EmptyElement";
 import ConstructorItem from "./components/ConstructorItem/ConstructorItem";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -30,24 +30,18 @@ const BurgerConstructor: React.FC = () => {
   const location = useLocation();
 
   //Не получилось так типизировать
-  // const { bun, ingredients, totalPrice } : {bun: TIngredient, ingredients: TIngredient[], totalPrice: number} = useSelector(
-  //   (store) => store.burgerConstructor
-  // );
+  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
 
-  const bun: TIngredient = useSelector((store) => store.burgerConstructor.bun);
-  const ingredients: TIngredient[] = useSelector(
-    (store) => store.burgerConstructor.ingredients
-  );
-  const totalPrice: number = useSelector(
-    (store) => store.burgerConstructor.totalPrice
-  );
+  const totalPrice = useMemo(() => {
+    const bunPrice = bun ? bun.price * 2 : 0;
+    const ingredientsPrice = ingredients
+      ? ingredients.reduce((sum, x) => sum + x.price, 0)
+      : 0;
+
+    return bunPrice + ingredientsPrice;
+  }, [bun, ingredients]);
 
   const isUserLoggedIn = useSelector((store) => store.auth.user.isLoggedIn);
-
-  //TotalPrice
-  useEffect(() => {
-    dispatch(setTotalPrice());
-  }, [bun, ingredients, dispatch]);
 
   //DnD
   const [{ isHover }, dropTargerRef] = useDrop({
@@ -67,13 +61,15 @@ const BurgerConstructor: React.FC = () => {
   const submitOrder = useCallback(() => {
     if (!isUserLoggedIn) navigate("/login");
     else {
-      const orderIngredients = [
-        bun._id,
-        ...ingredients.map((el) => el._id),
-        bun._id,
-      ];
-      dispatch<any>(setOrder(orderIngredients));
-      navigate("/order", { state: { background: location } });
+      if (bun && ingredients) {
+        let orderIngredients = [
+          bun._id,
+          ...ingredients.map((el) => el._id),
+          bun._id,
+        ];
+        dispatch<any>(setOrder(orderIngredients));
+        navigate("/order", { state: { background: location } });
+      }
     }
   }, [bun, dispatch, ingredients, isUserLoggedIn, location, navigate]);
 
@@ -100,7 +96,7 @@ const BurgerConstructor: React.FC = () => {
           )}
         </div>
         <div className={styles.ingredients}>
-          {ingredients.length ? (
+          {ingredients ? (
             <ul className={cn("custom-scroll", styles.scroll)}>
               {ingredients.map((el, i) => (
                 <ConstructorItem key={el.uuid} orderId={i} ingredient={el} />
@@ -136,7 +132,7 @@ const BurgerConstructor: React.FC = () => {
         </div>
         <Button
           onClick={submitOrder}
-          disabled={!bun || !ingredients.length}
+          disabled={!bun || !ingredients}
           htmlType="button"
           type="primary"
           size="large"
