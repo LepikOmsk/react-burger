@@ -15,6 +15,14 @@ import { TOrderActions } from "./actionTypes/orderDetailsActions";
 import { TAuthActions } from "./actionTypes/authActions";
 import { TCurrentIngredientActions } from "./actionTypes/currentIngregredientActions";
 import { TIngredientsActions } from "./actionTypes/ingredientsActions";
+import {
+  allOrdersMWProp,
+  TAllOrdersWSActions,
+} from "./actionTypes/allOrdersActions";
+import {
+  TUserOrdersWSActions,
+  userOrdersMWProp,
+} from "./actionTypes/userOrdersActions";
 
 //Reducers
 import { orderDetailsReducer } from "./reducers/orderDetailsReducer";
@@ -22,6 +30,9 @@ import { ingredientReducer } from "./reducers/ingredientsReducer";
 import { currentIngredientReducer } from "./reducers/currentIngredientReducer";
 import { burgerConstructorReducer } from "./reducers/burgerConstructorReducer";
 import { authReducer } from "./reducers/authReducer";
+import { allOrdersReducer } from "./reducers/allOrdersReducer";
+import { userOrdersReducer } from "./reducers/userOrdersReducer";
+import { WSMiddleware } from "./middleware/WSMiddleware";
 
 const rootReducer = combineReducers({
   ingredients: ingredientReducer,
@@ -29,6 +40,8 @@ const rootReducer = combineReducers({
   order: orderDetailsReducer,
   burgerConstructor: burgerConstructorReducer,
   auth: authReducer,
+  allOrders: allOrdersReducer,
+  userOrders: userOrdersReducer,
 });
 
 declare global {
@@ -42,16 +55,23 @@ const composeWithDevTools =
 
 export const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(
+    applyMiddleware(
+      thunk,
+      WSMiddleware(allOrdersMWProp),
+      WSMiddleware(userOrdersMWProp)
+    )
+  )
 );
 
-//! добавить все экшены
 export type TAppActions =
   | TAuthActions
   | TBurgerConstructorActions
   | TCurrentIngredientActions
   | TIngredientsActions
-  | TOrderActions;
+  | TOrderActions
+  | TAllOrdersWSActions
+  | TUserOrdersWSActions;
 
 export type TRootState = ReturnType<typeof rootReducer>;
 

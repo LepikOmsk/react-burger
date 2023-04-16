@@ -1,0 +1,54 @@
+.main {
+  width: 100%;
+
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+
+  border-radius: 40px;
+  background-color: #1c1c21;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 24px;
+
+  grid-area: footer;
+}
+
+.suptitle {
+  font-size: 28px;
+  line-height: 0.85;
+  font-weight: 400;
+
+  grid-area: orderId;
+}
+
+.timing {
+  white-space: nowrap;
+  justify-self: flex-end;
+  grid-area: timing;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  grid-area: title;
+}
+
+.title_done {
+  color: #00cccc;
+}

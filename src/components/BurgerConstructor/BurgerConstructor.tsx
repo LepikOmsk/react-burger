@@ -1,8 +1,8 @@
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
 import { useMemo, useCallback } from "react";
-import { useDispatch } from "react-redux";
+
 import { useDrop } from "react-dnd";
-import { useSelector } from "../../redux/store";
+import { useDispatch, useSelector } from "../../redux/store";
 
 import cn from "classnames";
 
@@ -67,7 +67,7 @@ const BurgerConstructor: React.FC = () => {
           ...ingredients.map((el) => el._id),
           bun._id,
         ];
-        dispatch<any>(setOrder(orderIngredients));
+        dispatch(setOrder(orderIngredients));
         navigate("/order", { state: { background: location } });
       }
     }

@@ -1,11 +1,11 @@
 type TDigits = {
   number: string | number;
-  size: "small" | "medium" | "large" | "default";
+  size?: "medium" | "large" | "default";
   type: "main" | "inactive";
   className?: string;
 };
 
-const Digits: React.FC<TDigits> = ({ number, size, type }) => {
+const Digits: React.FC<TDigits> = ({ number, size = "default", type }) => {
   return (
     <>
       {type === "main" ? (

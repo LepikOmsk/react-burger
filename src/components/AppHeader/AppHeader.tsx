@@ -21,7 +21,7 @@ const AppHeader: React.FC = () => {
           <HeaderComponent
             icon={<ListIcon type={"secondary"} />}
             text="Лента заказов"
-            path="/order-feed"
+            path="/feed"
           />
 
           <Link to="/" className={styles.headerLogo}>

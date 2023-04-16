@@ -9,8 +9,9 @@ import { getIngredients } from "../../redux/actionTypes/ingredientsActions";
 //Компоненты
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import AppHeader from "../AppHeader/AppHeader";
-import OrderDetails from "../BurgerConstructor/components/OrderDetails/OrderDetails";
+import OrderModal from "../BurgerConstructor/components/OrderModal/OrderModal";
 import IngredientModal from "../BurgerIngredients/components/IngredientModal/IngredientModal";
+import OrderDetailsModal from "../OrderDetails/components/OrderDetailsModal/OrderDetailsModal";
 
 //Типы
 import { TUseLocation } from "../../utils/types/locationType";
@@ -25,8 +26,9 @@ import OrderHistoryPage from "../../pages/OrderHistoryPage/OrderHistoryPage";
 import RegisterPage from "../../pages/RegisterPage/RegisterPage";
 import ProfileInfo from "../../pages/ProfilePage/ProfileInfo";
 import ResetPasswordPage from "../../pages/ResetPasswordPage/ResetPasswordPage";
-import OrderFeedPage from "../../pages/OrderFeedPage/OrderFeedPage";
 import IngredientPage from "../../pages/IngredientPage/IngredientPage";
+import FeedPage from "../../pages/FeedPage/FeedPage";
+import OrderPage from "../../pages/OrderPage/OrderPage";
 
 const App: React.FC = () => {
   const location: TUseLocation = useLocation();
@@ -45,17 +47,21 @@ const App: React.FC = () => {
       <Routes location={background || location}>
         {/* Header Links */}
         <Route path="/" element={<ConstructorPage />} />
-        <Route path="/order-feed" element={<OrderFeedPage />} />
+        <Route path="/feed" element={<FeedPage />} />
         <Route
           path="/profile"
           element={<ProtectedRoute element={<ProfilePage />} />}
         >
-          <Route path="/profile/order-history" element={<OrderHistoryPage />} />
+          <Route path="/profile/orders" element={<OrderHistoryPage />} />
           <Route path="/profile" element={<ProfileInfo />} />
         </Route>
 
         {/* Ingredient Page */}
         <Route path="/ingredients/:id" element={<IngredientPage />} />
+
+        {/* Order Page */}
+        <Route path="/profile/:id" element={<OrderPage />} />
+        <Route path="/feed/:id" element={<OrderPage />} />
 
         {/* Auth Routes */}
         <Route
@@ -85,7 +91,9 @@ const App: React.FC = () => {
       {background && (
         <Routes>
           <Route path="/ingredients/:id" element={<IngredientModal />} />
-          <Route path="/order" element={<OrderDetails />} />
+          <Route path="/order" element={<OrderModal />} />
+          <Route path="/profile/:id" element={<OrderDetailsModal />} />
+          <Route path="/feed/:id" element={<OrderDetailsModal />} />
         </Routes>
       )}
     </>

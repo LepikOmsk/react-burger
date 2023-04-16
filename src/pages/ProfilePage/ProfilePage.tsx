@@ -4,7 +4,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import Text from "../../components/Inscriptions/Text";
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../redux/store";
 import { userLogout } from "../../redux/actionTypes/authActions";
 
 // Styles
@@ -19,9 +19,7 @@ const ProfilePage: React.FC = () => {
     []
   );
 
-  const logout = React.useCallback(() => {
-    dispatch<any>(userLogout());
-  }, [dispatch]);
+  const logout = () => dispatch(userLogout());
 
   return (
     <main className={`container ${styles.main}`}>
@@ -31,7 +29,7 @@ const ProfilePage: React.FC = () => {
             <Text size="medium" type="main" text="Профиль" />
           </NavLink>
 
-          <NavLink className={className} to="/profile/order-history" end>
+          <NavLink className={className} to="/profile/orders" end>
             <Text size="medium" type="main" text="История заказов" />
           </NavLink>
 
@@ -41,7 +39,7 @@ const ProfilePage: React.FC = () => {
         </div>
 
         <Text
-          size="small"
+          size="default"
           type="inactive"
           text="В этом разделе вы можете изменить свои персональные данные"
         />

@@ -8,10 +8,13 @@ import Modal from "../../../modal/Modal";
 //Константы
 import { ORDER_IMG } from "../../../../utils/constants";
 
-import styles from "../OrderDetails/OrderDetails.module.css";
+//Redux
 import { orderSelector } from "../../../../redux/selectors/orderDetailsSelector";
 
-const OrderDetails: React.FC = () => {
+//Styles
+import styles from "../OrderModal/OrderModal.module.css";
+
+const OrderModal: React.FC = () => {
   const { orderData, isLoading, hasError } = useSelector(orderSelector);
 
   return (
@@ -43,4 +46,4 @@ const OrderDetails: React.FC = () => {
   );
 };
 
-export default OrderDetails;
+export default OrderModal;

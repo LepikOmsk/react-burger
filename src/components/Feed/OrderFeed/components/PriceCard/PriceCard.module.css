@@ -1,0 +1,33 @@
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 8px;
+
+  white-space: nowrap;
+}
+
+.small {
+  font-family: "Iceland", Arial, Helvetica, sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 0.85;
+  color: #f2f2f3;
+}
+
+.small svg {
+  width: 24px;
+  height: 24px;
+}
+
+.medium {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 0.75;
+  color: #f2f2f3;
+}
+
+.medium svg {
+  width: 36px;
+  height: 36px;
+}
