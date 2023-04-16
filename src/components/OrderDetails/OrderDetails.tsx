@@ -8,8 +8,6 @@ import { useFetchOrder } from "../../utils/hooks/fetchOrder";
 import OrderDetailsBody from "./components/OrderDetailsBody/OrderDetailsBody";
 
 const OrderDetails: React.FC = () => {
-  console.log("test");
-
   const { id = "" } = useParams();
   const { order, isLoading, hasError } = useFetchOrder(id);
 

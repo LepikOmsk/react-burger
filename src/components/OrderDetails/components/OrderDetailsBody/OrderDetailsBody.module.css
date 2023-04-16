@@ -30,16 +30,11 @@
 }
 
 .scroll {
-  display: flex;
-  flex-direction: column;
   overflow-y: overlay;
-  gap: 16px 0;
-  padding: 0 16px;
-  inset: 0;
-  width: 100%;
-  position: absolute;
-  border-radius: 50px;
-  margin-block-end: 60px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  border-radius: 6px;
 }
 
 .footer {

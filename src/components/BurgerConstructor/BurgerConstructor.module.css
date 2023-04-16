@@ -37,14 +37,6 @@
   width: 100%;
 }
 
-/* !Удалить */
-.item {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-}
-
 .createOrder {
   align-items: center;
   column-gap: 40px;

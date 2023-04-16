@@ -7,8 +7,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 // Redux
-import { useDispatch } from "react-redux";
-import { useSelector } from "../../redux/store";
+
+import { useDispatch, useSelector } from "../../redux/store";
 import { setUser } from "../../redux/actionTypes/authActions";
 
 // Styles
@@ -60,7 +60,7 @@ const ProfileInfo = () => {
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch<any>(setUser(form));
+    dispatch(setUser(form));
   };
 
   return (

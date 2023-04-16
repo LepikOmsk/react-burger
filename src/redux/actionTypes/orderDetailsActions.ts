@@ -2,7 +2,10 @@ import { AppDispatch, AppThunk } from "../store";
 
 import { getCookie } from "../../utils/authUtils/cookie";
 import { ORDER_URL } from "../../utils/constants";
-import { customFetch, IRequestCreator } from "../../utils/customFetch";
+import {
+  customFetch,
+  IRequestCreator,
+} from "../../utils/authUtils/customFetch";
 import {
   setOrderErrorStatus,
   setOrderRequestStatus,

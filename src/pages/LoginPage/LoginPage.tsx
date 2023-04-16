@@ -10,10 +10,11 @@ import LinkWordButton from "../../components/LinkWordButton/LinkWordButton";
 import Text from "../../components/Inscriptions/Text";
 
 // Redux
-import { useDispatch } from "react-redux";
+
 import { userLogin } from "../../redux/actionTypes/authActions";
 
 import styles from "./LoginPage.module.css";
+import { useDispatch } from "../../redux/store";
 
 const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const LoginPage: React.FC = () => {
     (e: React.FormEvent) => {
       e.preventDefault();
 
-      dispatch<any>(userLogin(login));
+      dispatch(userLogin(login));
     },
     [dispatch, login]
   );

@@ -12,7 +12,7 @@ const OrderDetailsModal: React.FC = () => {
   const { id = "" } = useParams();
 
   return (
-    <Modal title={`#${id}`}>
+    <Modal title={`#${id}`} titleSize="small">
       <OrderDetails />
     </Modal>
   );

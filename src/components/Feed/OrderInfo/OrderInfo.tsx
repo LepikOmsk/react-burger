@@ -44,13 +44,17 @@ const OrderInfo: React.FC = () => {
         </div>
 
         <div className={styles.allOrders}>
-          <Text size="default" type="main" text="Выполнено за все время:" />
-          <Digits size="default" type="main" number={total} />
+          <Text size="medium" type="main" text="Выполнено за все время:" />
+          <div className={styles.beautifulNumber}>
+            <Digits size="large" type="main" number={total} />
+          </div>
         </div>
 
         <div className={styles.todayOrders}>
-          <Text size="default" type="main" text="Выполнено за сегодня:" />
-          <Digits size="default" type="main" number={totalToday} />
+          <Text size="medium" type="main" text="Выполнено за сегодня:" />
+          <div className={styles.beautifulNumber}>
+            <Digits size="large" type="main" number={totalToday} />
+          </div>
         </div>
       </div>
     </section>

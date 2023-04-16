@@ -1,6 +1,5 @@
-import { refreshToken } from "./../../utils/authUtils/refreshToken";
-
 import { Middleware, MiddlewareAPI } from "redux";
+import { refreshTokens } from "../../utils/authUtils/refreshToken";
 import { AppDispatch, TAppActions, TRootState } from "../store";
 
 type TOnMessage =
@@ -39,13 +38,10 @@ export const WSMiddleware = (WSActions: IWSActions): Middleware =>
 
       if (socket) {
         socket.onopen = (event) => {
-          console.log("onopen", event);
           dispatch(WSActions.onOpen(event));
         };
 
         socket.onerror = (event) => {
-          console.log("error", event);
-
           dispatch(WSActions.onError(event));
         };
 
@@ -55,7 +51,7 @@ export const WSMiddleware = (WSActions: IWSActions): Middleware =>
           if (!data.success && data.message === "Invalid or missing token") {
             socket?.close();
 
-            refreshToken().then(() =>
+            refreshTokens().then(() =>
               dispatch({
                 type: action.type,
                 payload: wsUrl,

@@ -29,8 +29,9 @@ const BurgerConstructor: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  //Не получилось так типизировать
   const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
+
+  console.log(ingredients);
 
   const totalPrice = useMemo(() => {
     const bunPrice = bun ? bun.price * 2 : 0;

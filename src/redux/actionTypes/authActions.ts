@@ -2,7 +2,7 @@ import { AppDispatch, AppThunk } from "../store";
 
 //Utils
 import { deleteCookie, getCookie } from "../../utils/authUtils/cookie";
-import { refreshToken } from "../../utils/authUtils/refreshToken";
+
 import { saveTokens } from "../../utils/authUtils/saveTokens";
 import {
   AUTH_LOGIN,
@@ -10,7 +10,10 @@ import {
   AUTH_REGISTER,
   AUTH_USER,
 } from "../../utils/constants";
-import { customFetch, IRequestCreator } from "../../utils/customFetch";
+import {
+  customFetch,
+  IRequestCreator,
+} from "../../utils/authUtils/customFetch";
 
 import {
   getUserError,
@@ -38,6 +41,7 @@ import {
   TAuthLogin,
   TAuthRegister,
 } from "../reducers/authReducer";
+import { fetchWithRefresh } from "../../utils/authUtils/fetchWIthRefresh";
 
 export enum AuthStatus {
   REGISTER_REQUEST = "REGISTER_REQUEST",
@@ -217,16 +221,9 @@ export const getUser = (): AppThunk => (dispatch: AppDispatch) => {
     },
   };
 
-  //!! FetchWithRefresh?
-  customFetch<IUserResponse>(AUTH_USER, request)
+  fetchWithRefresh<IUserResponse>(AUTH_USER, request)
     .then((res) => dispatch(getUserSuccess(res)))
-    .catch((err) => {
-      if (err.message === "jwt expired") {
-        refreshToken().then(() => dispatch(getUser()));
-      } else {
-        dispatch(getUserError());
-      }
-    });
+    .catch(() => dispatch(getUserError()));
 };
 
 export const setUser =
@@ -242,16 +239,7 @@ export const setUser =
       body: { name, email, password },
     };
 
-    //!! FetchWithRefresh?
-    customFetch<IUserResponse>(AUTH_USER, request)
+    fetchWithRefresh<IUserResponse>(AUTH_USER, request)
       .then((res) => dispatch(setUserSuccess(res)))
-      .catch((err) => {
-        if (err.message === "jwt expired") {
-          refreshToken().then(() =>
-            dispatch(setUser({ name, email, password }))
-          );
-        } else {
-          dispatch(setUserError());
-        }
-      });
+      .catch(() => dispatch(setUserError()));
   };

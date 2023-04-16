@@ -1,7 +1,7 @@
 import { AppDispatch, AppThunk } from "../store";
 
 import { INGREDIENTS_URL } from "../../utils/constants";
-import { customFetch } from "../../utils/customFetch";
+import { customFetch } from "../../utils/authUtils/customFetch";
 import { TIngredient } from "../../utils/types/ingredientType";
 
 import {

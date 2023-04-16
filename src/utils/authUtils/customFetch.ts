@@ -1,4 +1,4 @@
-import { checkResponse } from "./checkResponse";
+import { checkResponse } from "../checkResponse";
 
 export type TMethod = "GET" | "POST" | "PATCH";
 export type THeaders = { [name: string]: string };

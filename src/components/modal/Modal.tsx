@@ -1,24 +1,27 @@
 import React, { useCallback, useEffect, PropsWithChildren } from "react";
-import ReactDOM from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
+import cn from "classnames";
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { TUseLocation } from "../../utils/types/locationType";
+
 import ModalOverlay from "./ModalOverlay/ModalOverlay";
+import Portal from "../Portal/Portal";
 
 import styles from "./Modal.module.css";
-import { TUseLocation } from "../../utils/types/locationType";
 
 type TModal = {
   title?: string;
+  titleSize?: "small" | "medium";
 };
 
-const Modal: React.FC<PropsWithChildren<TModal>> = ({ children, title }) => {
+const Modal: React.FC<PropsWithChildren<TModal>> = ({
+  title,
+  titleSize = "medium",
+  children,
+}) => {
   const location: TUseLocation = useLocation();
-
-  const headingTitle = (
-    <p className={`text text_type_main-large ${styles.title}`}>{title}</p>
-  );
 
   //Функция закрытия модального окна
   const navigate = useNavigate();
@@ -40,24 +43,26 @@ const Modal: React.FC<PropsWithChildren<TModal>> = ({ children, title }) => {
     };
   }, [closeModal]);
 
-  const modalRoot = React.useMemo(() => document.getElementById("modal"), []);
-
-  if (!modalRoot) return null;
-
-  return ReactDOM.createPortal(
-    <div onClick={(e) => e.stopPropagation()} className={styles.modalContainer}>
-      <div className={`${styles.modal} ${title ? styles.modalWithHeader : ""}`}>
+  return (
+    <Portal>
+      <div className={styles.modal}>
         <div className={styles.header}>
-          {title && headingTitle}
-          <button className={styles.closeButton}>
-            <CloseIcon type="primary" onClick={closeModal} />
+          {!!title && (
+            <h2 className={cn(styles.title, styles[`title_${titleSize}`])}>
+              {title}
+            </h2>
+          )}
+
+          <button className={styles.closeButton} onClick={closeModal}>
+            <CloseIcon type="primary" />
           </button>
         </div>
+
         <div className={styles.modal_content}>{children}</div>
       </div>
+
       <ModalOverlay closeModal={closeModal} />
-    </div>,
-    modalRoot
+    </Portal>
   );
 };
 

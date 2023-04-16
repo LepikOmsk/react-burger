@@ -9,7 +9,10 @@ import LinkWordButton from "../../components/LinkWordButton/LinkWordButton";
 import Text from "../../components/Inscriptions/Text";
 
 import { PASSWORD_RESET } from "../../utils/constants";
-import { customFetch, IRequestCreator } from "../../utils/customFetch";
+import {
+  customFetch,
+  IRequestCreator,
+} from "../../utils/authUtils/customFetch";
 
 import styles from "./ForgotPasswordPage.module.css";
 

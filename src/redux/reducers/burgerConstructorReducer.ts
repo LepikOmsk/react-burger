@@ -11,7 +11,7 @@ export interface IBurgerConstructorState {
 
 const initialState: IBurgerConstructorState = {
   bun: null,
-  ingredients: [],
+  ingredients: null,
 };
 
 export const burgerConstructorReducer = (

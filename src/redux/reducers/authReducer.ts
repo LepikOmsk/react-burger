@@ -62,7 +62,7 @@ const initialState: TAuthState = {
     email: "",
     isLoggedIn: false,
   },
-  isLoading: false,
+  isLoading: true,
   hasError: false,
 };
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { IWSOrder } from "../../redux/actionTypes/allOrdersActions";
 
 // Utils
-import { customFetch } from "../customFetch";
+import { customFetch } from "../authUtils/customFetch";
 import { ORDER_URL } from "./../constants";
 
 interface IOrderFetch {

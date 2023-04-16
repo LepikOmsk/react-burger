@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 // Redux
-import { useDispatch } from "react-redux";
+
 import { userRegister } from "../../redux/actionTypes/authActions";
 
 // Components
@@ -16,6 +16,7 @@ import Text from "../../components/Inscriptions/Text";
 
 //Styles
 import styles from "./RegisterPage.module.css";
+import { useDispatch } from "../../redux/store";
 
 const RegisterPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const RegisterPage: React.FC = () => {
   const submitForm = React.useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      dispatch<any>(userRegister(form));
+      dispatch(userRegister(form));
     },
     [dispatch, form]
   );
