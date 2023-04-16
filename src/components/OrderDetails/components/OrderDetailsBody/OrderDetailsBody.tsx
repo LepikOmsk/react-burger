@@ -15,6 +15,7 @@ import { OrderStatus } from "../../../../utils/constants";
 // Components
 import OrderRow from "../OrderRow/OrderRow";
 import PriceCard from "../../../Feed/OrderFeed/components/PriceCard/PriceCard";
+import Text from "../../../Inscriptions/Text";
 
 // Styles
 import styles from "./OrderDetailsBody.module.css";
@@ -60,11 +61,18 @@ const OrderDetailsBody: React.FC<IOrderDetailsBody> = ({ order }) => {
 
   return (
     <div className={styles.main}>
-      <h3 className={styles.name}>{order.name}</h3>
+      <div className={styles.name}>
+        <Text size="medium" type="main" text={order.name} />
+      </div>
 
-      <p className={styles.status}>{OrderStatus[order.status]}</p>
+      <div className={styles.status}>
+        <Text size="default" type="main" text={OrderStatus[order.status]} />
+      </div>
 
-      <h3 className={styles.composition}>Состав:</h3>
+      <div className={styles.composition}>
+        <Text size="medium" type="main" text="Состав:" />
+      </div>
+   
 
       <ul className={cn(styles.ingredients, "custom-scroll", styles.scroll)}>
         {ingredientsList}

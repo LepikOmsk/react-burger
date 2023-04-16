@@ -6,6 +6,7 @@ import { TIngredient } from "../../../../utils/types/ingredientType";
 // Components
 import PriceCard from "../../../Feed/OrderFeed/components/PriceCard/PriceCard";
 import IngredientIcon from "../../../Feed/OrderFeed/components/IngredientIcon/IngredientIcon";
+import Text from "../../../Inscriptions/Text";
 
 // Styles
 import styles from "./OrderRow.module.css";
@@ -19,7 +20,10 @@ const OrderRow: React.FC<IOrderRow> = ({ ingredient, count }) => {
   return (
     <li className={styles.main}>
       <IngredientIcon image={ingredient.image_mobile} />
-      <p className={styles.title}>{ingredient.name}</p>
+      <div className={styles.title}>
+        <Text size="default" type="main" text={ingredient.name} />
+      </div>
+
       <PriceCard size="small" prefix={count} price={ingredient.price} />
     </li>
   );
