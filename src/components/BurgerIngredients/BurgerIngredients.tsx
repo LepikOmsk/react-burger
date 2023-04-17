@@ -43,10 +43,11 @@ const BurgerIngrediends = () => {
       containerId="ingredients"
       onSetActive={() => setCurrentTab(tab.title)}
     >
-      {/* Метод оnClick в Tab не требуется.
-    eslint-disable-next-line
-    @ts-ignore */}
-      <Tab value={tab.title} active={currentTab === tab.title}>
+      <Tab
+        value={tab.title}
+        onClick={() => {}}
+        active={currentTab === tab.title}
+      >
         {tab.title}
       </Tab>
     </Link>
