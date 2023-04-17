@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "../../../../redux/store";
+
+import { useDispatch, useSelector } from "../../../../redux/store";
 import { useParams } from "react-router-dom";
 
 import Digits from "../../../Inscriptions/Digits";

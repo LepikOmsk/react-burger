@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "../../../../redux/store";
+
+import { useDispatch, useSelector } from "../../../../redux/store";
 import {
   ConstructorElement,
   DragIcon,

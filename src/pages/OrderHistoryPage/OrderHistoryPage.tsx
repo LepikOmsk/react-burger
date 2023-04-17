@@ -1,13 +1,12 @@
 import React from "react";
 
 //Redux
-import { useSelector } from "react-redux";
 import {
   startUserOrdersWSConnection,
   stopUserOrdersWSConnection,
 } from "../../redux/actionCreators/userOrdersActionCreators";
 import { userOrderSelector } from "../../redux/selectors/userOrdersSelector";
-import { useDispatch } from "../../redux/store";
+import { useDispatch, useSelector } from "../../redux/store";
 
 //Utils
 import { getCookie } from "../../utils/authUtils/cookie";
