@@ -27,11 +27,7 @@ import {
 
 describe("Auth Reducer Tests", function () {
   const initialState: TAuthState = {
-    user: {
-      name: "",
-      email: "",
-      isLoggedIn: false,
-    },
+    user: null,
     isLoading: true,
     hasError: false,
   };
@@ -46,7 +42,7 @@ describe("Auth Reducer Tests", function () {
 
   const stateWithUser: TAuthState = {
     ...initialState,
-    user: { ...testUser, isLoggedIn: true },
+    user: testUser,
     isLoading: false,
   };
 
@@ -135,7 +131,7 @@ describe("Auth Reducer Tests", function () {
   it("should handle SET_USER_SUCCESS", function () {
     expect(
       authReducer(
-        { ...initialState, user: { ...initialState.user, isLoggedIn: true } },
+        { ...initialState },
         setUserSuccess({ user: testUser } as IUserResponse)
       )
     ).toEqual(stateWithUser);

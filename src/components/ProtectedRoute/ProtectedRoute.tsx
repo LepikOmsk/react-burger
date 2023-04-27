@@ -14,7 +14,7 @@ const ProtectedRoute: React.FC<TProtectedRoute> = ({
   onlyUnAuth = false,
 }) => {
   const location = useLocation();
-  const isLoggedIn = useSelector((store) => store.auth.user.isLoggedIn);
+  const isLoggedIn = useSelector((store) => store.auth.user);
 
   const { isLoading } = useSelector((store) => store.auth);
 

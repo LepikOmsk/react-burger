@@ -200,7 +200,7 @@ export const userLogout = (): AppThunk => (dispatch: AppDispatch) => {
 
     customFetch<ILogoutResponse>(AUTH_LOGOUT, request)
       .then((res) => {
-        deleteCookie("token");
+        deleteCookie("accessToken");
         localStorage.removeItem("refreshToken");
 
         dispatch(logoutSuccess(res));

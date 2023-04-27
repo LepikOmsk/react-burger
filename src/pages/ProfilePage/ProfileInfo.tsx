@@ -17,19 +17,21 @@ import styles from "./ProfileInfo.module.css";
 const ProfileInfo = () => {
   const dispatch = useDispatch();
 
-  const { name, email } = useSelector((store) => store.auth.user);
+  const user = useSelector((store) => store.auth.user);
 
+  //! поправить костыль
   const formInitial = {
-    name,
-    email,
+    name: user?.name || "",
+    email: user?.email || "",
     password: "",
   };
 
   const [form, setForm] = useState(formInitial);
 
   const isEdit = useMemo(
-    () => form.name !== name || form.email !== email || !!form.password,
-    [name, email, form]
+    () =>
+      form.name !== user?.name || form.email !== user?.email || !!form.password,
+    [user, form]
   );
 
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {

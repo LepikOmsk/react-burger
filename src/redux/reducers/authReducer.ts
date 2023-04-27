@@ -3,7 +3,6 @@ import { AuthStatus, TAuthActions } from "../actionTypes/authActions";
 export type TAuthUser = {
   name: string;
   email: string;
-  isLoggedIn: boolean;
 };
 
 export type TAuthRegister = {
@@ -18,7 +17,7 @@ export type TAuthLogin = {
 };
 
 export type TAuthState = {
-  user: TAuthUser;
+  user: TAuthUser | null;
   isLoading: boolean;
   hasError: boolean;
 };
@@ -57,11 +56,7 @@ export interface IUserResponse {
 }
 
 const initialState: TAuthState = {
-  user: {
-    name: "",
-    email: "",
-    isLoggedIn: false,
-  },
+  user: null,
   isLoading: true,
   hasError: false,
 };
@@ -78,10 +73,8 @@ export const authReducer = (
       return {
         ...state,
         user: {
-          ...state.user,
           name: action.response.user.name,
           email: action.response.user.email,
-          isLoggedIn: true,
         },
         isLoading: false,
       };
@@ -96,10 +89,8 @@ export const authReducer = (
       return {
         ...state,
         user: {
-          ...state.user,
           name: action.response.user.name,
           email: action.response.user.email,
-          isLoggedIn: true,
         },
         isLoading: false,
       };
@@ -126,10 +117,8 @@ export const authReducer = (
       return {
         ...state,
         user: {
-          ...state.user,
           name: action.response.user.name,
           email: action.response.user.email,
-          isLoggedIn: true,
         },
         isLoading: false,
       };

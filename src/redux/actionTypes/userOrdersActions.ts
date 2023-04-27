@@ -5,7 +5,7 @@ import {
   successUserOrdersWSConnection,
 } from "../actionCreators/userOrdersActionCreators";
 
-import { IAllOrders, IWSOrder } from "./allOrdersActions";
+import { IWSOrder } from "./allOrdersActions";
 
 export enum userOrdersWSActionTypes {
   USER_START = "WS_USER_ORDERS_CONNECTION_START",

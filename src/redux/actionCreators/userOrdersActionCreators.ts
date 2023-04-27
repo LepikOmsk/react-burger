@@ -1,4 +1,4 @@
-import { IAllOrders } from "../actionTypes/allOrdersActions";
+
 import {
   IClosedUserOrdersWSConnection,
   IErrorUserOrdersWSConnection,

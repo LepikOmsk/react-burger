@@ -40,7 +40,7 @@ const BurgerConstructor: React.FC = () => {
     return bunPrice + ingredientsPrice;
   }, [bun, ingredients]);
 
-  const isUserLoggedIn = useSelector((store) => store.auth.user.isLoggedIn);
+  const isUserLoggedIn = useSelector((store) => store.auth.user);
 
   //DnD
   const [{ isHover }, dropTargerRef] = useDrop({
