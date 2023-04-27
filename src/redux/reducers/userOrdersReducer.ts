@@ -4,19 +4,16 @@ import {
   userOrdersWSActionTypes,
 } from "../actionTypes/userOrdersActions";
 
-interface IUOInitialState {
+export interface IUOInitialState {
   wsConnected: boolean;
-  orders: IWSOrder[];
-  total: number;
-  totalToday: number;
+  orders: IWSOrder[] | null;
+
   error?: Event | undefined;
 }
 
 const initialState: IUOInitialState = {
   wsConnected: false,
-  orders: [],
-  total: 0,
-  totalToday: 0,
+  orders: null,
 };
 
 export const userOrdersReducer = (

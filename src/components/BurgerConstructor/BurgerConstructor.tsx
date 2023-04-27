@@ -31,8 +31,6 @@ const BurgerConstructor: React.FC = () => {
 
   const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
 
-  console.log(ingredients);
-
   const totalPrice = useMemo(() => {
     const bunPrice = bun ? bun.price * 2 : 0;
     const ingredientsPrice = ingredients

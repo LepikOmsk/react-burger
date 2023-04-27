@@ -4,7 +4,7 @@ import {
   TIngredientsActions,
 } from "../actionTypes/ingredientsActions";
 
-interface IIngredientsState {
+export interface IIngredientsState {
   data: TIngredient[] | null;
   isLoading: boolean;
   hasError: boolean;
@@ -22,13 +22,13 @@ export const ingredientReducer = (
 ): IIngredientsState => {
   switch (action.type) {
     case IngredientsStatus.INGREDIENTS_REQUEST:
-      return { ...state, isLoading: true, hasError: false };
+      return { ...initialState, isLoading: true, hasError: false };
 
     case IngredientsStatus.INGREDIENTS_SUCCESS:
-      return { ...state, isLoading: false, data: action.payload };
+      return { ...initialState, isLoading: false, data: action.payload };
 
     case IngredientsStatus.INGREDIENTS_ERROR:
-      return { ...state, isLoading: false, hasError: true };
+      return { ...initialState, isLoading: false, hasError: true };
 
     default:
       return state;

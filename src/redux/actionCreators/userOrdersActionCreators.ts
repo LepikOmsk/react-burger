@@ -6,6 +6,7 @@ import {
   IStartUserOrdersWSConnection,
   IStopUserOrdersWSConnection,
   ISuccessUserOrdersWSConnection,
+  IUserOrders,
   userOrdersWSActionTypes,
 } from "../actionTypes/userOrdersActions";
 
@@ -42,24 +43,12 @@ export const errorUserOrdersWSConnection = (
 });
 
 export const getUserOrders = (event: MessageEvent): IGetUserOrders => {
-  const data: IAllOrders = JSON.parse(event.data as string) as IAllOrders;
-
-  const doneOrders = data.orders
-    .filter((el) => el.status === "done")
-    .map((el) => el.number);
-
-  const onworkOrders = data.orders
-    .filter((el) => el.status === "created")
-    .map((el) => el.number);
+  const data: IUserOrders = JSON.parse(event.data as string) as IUserOrders;
 
   return {
     type: userOrdersWSActionTypes.USER_GET_ORDERS,
     payload: {
       orders: data.orders,
-      total: data.total,
-      totalToday: data.totalToday,
-      doneOrders,
-      onworkOrders,
     },
   };
 };

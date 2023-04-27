@@ -4,7 +4,7 @@ import {
   TAllOrdersWSActions,
 } from "../actionTypes/allOrdersActions";
 
-interface IAOInitialState {
+export interface IAOInitialState {
   wsConnected: boolean;
   orders: IWSOrder[];
   onworkOrders: number[];

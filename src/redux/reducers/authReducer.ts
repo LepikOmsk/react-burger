@@ -112,8 +112,8 @@ export const authReducer = (
 
     case AuthStatus.LOGOUT_SUCCESS:
       return {
-        ...state,
         ...initialState,
+        isLoading: false,
       };
 
     case AuthStatus.LOGOUT_ERROR:

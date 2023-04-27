@@ -32,7 +32,7 @@ const OrderHistory: React.FC = () => {
 
   return (
     <>
-      {!orders.length ? (
+      {!orders ? (
         <h1>Загрузка...</h1>
       ) : (
         <OrderFeed

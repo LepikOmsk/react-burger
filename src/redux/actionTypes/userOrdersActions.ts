@@ -5,7 +5,7 @@ import {
   successUserOrdersWSConnection,
 } from "../actionCreators/userOrdersActionCreators";
 
-import { IAllOrders } from "./allOrdersActions";
+import { IAllOrders, IWSOrder } from "./allOrdersActions";
 
 export enum userOrdersWSActionTypes {
   USER_START = "WS_USER_ORDERS_CONNECTION_START",
@@ -37,7 +37,11 @@ export interface IErrorUserOrdersWSConnection {
 }
 export interface IGetUserOrders {
   type: userOrdersWSActionTypes.USER_GET_ORDERS;
-  payload: IAllOrders;
+  payload: IUserOrders;
+}
+
+export interface IUserOrders {
+  orders: IWSOrder[];
 }
 
 export const userOrdersMWProp = {
