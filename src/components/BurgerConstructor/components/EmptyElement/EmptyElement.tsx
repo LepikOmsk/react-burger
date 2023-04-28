@@ -8,12 +8,7 @@ type TEmptyElement = {
 
 const EmptyElement: React.FC<TEmptyElement> = ({ position, title }) => {
   return (
-    <div
-      className={`
-				${styles.container}
-				${position ? styles[position] : ""}
-			`}
-    >
+    <div className={`${styles.container}	${position ? styles[position] : ""}`}>
       <Text text={title} size="default" type="main" />
     </div>
   );

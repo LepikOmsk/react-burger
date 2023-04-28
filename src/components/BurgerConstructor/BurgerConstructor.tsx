@@ -76,10 +76,9 @@ const BurgerConstructor: React.FC = () => {
     <section className={styles.containerConstructor}>
       <div
         ref={dropTargerRef}
-        className={`
-				${styles.burgerConstructor}
-				${isHover ? styles.onHover : " "}
-			`}
+        className={`${styles.burgerConstructor}${
+          isHover ? styles.onHover : " "
+        }`}
       >
         <div className={styles.bun}>
           {bun ? (
@@ -102,7 +101,7 @@ const BurgerConstructor: React.FC = () => {
               ))}
             </ul>
           ) : (
-            <EmptyElement title="Добавьте ингридиенты" />
+            <EmptyElement title="Добавьте ингредиенты" />
           )}
         </div>
         <div className={styles.bun}>
