@@ -1,0 +1,26 @@
+.component {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 8px;
+
+  padding: 16px 20px;
+
+  border-radius: 40px;
+}
+
+.component > svg {
+  fill: #8585ad;
+}
+
+.component > p {
+  color: #8585ad;
+}
+
+.active > svg {
+  fill: #f2f2f3;
+}
+
+.active > p {
+  color: #f2f2f3;
+}

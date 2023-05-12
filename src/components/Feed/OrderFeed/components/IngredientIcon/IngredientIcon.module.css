@@ -1,0 +1,58 @@
+.main {
+  height: 64px;
+  aspect-ratio: 1/1;
+
+  padding: 2px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background-image: linear-gradient(64deg, #801ab3 0%, #4c4cff 100%);
+
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+  background-color: #131316;
+}
+
+.image {
+  height: 90%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.toplayer {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  border-radius: 50%;
+  background-color: rgba(#131316, 0.6);
+
+  font-family: "JetBrains Mono", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #f2f2f3;
+  user-select: none;
+}

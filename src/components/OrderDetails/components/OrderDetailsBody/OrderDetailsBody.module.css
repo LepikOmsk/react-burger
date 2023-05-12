@@ -1,0 +1,51 @@
+.main {
+  width: 100%;
+  max-width: 640px;
+  text-align: left;
+
+  padding-top: 20px;
+}
+
+.name {
+  margin-bottom: 12px;
+}
+
+.status {
+  color: #00cccc;
+
+  margin-bottom: 60px;
+}
+
+.composition {
+  margin-bottom: 24px;
+}
+
+.ingredients {
+  max-height: 320px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  margin-bottom: 40px;
+  padding-right: 24px;
+}
+
+.scroll {
+  overflow-y: overlay;
+}
+
+.scroll::-webkit-scrollbar-track {
+  border-radius: 6px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timing {
+  white-space: nowrap;
+  justify-self: flex-end;
+  grid-area: timing;
+}

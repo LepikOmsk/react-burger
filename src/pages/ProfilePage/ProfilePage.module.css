@@ -1,0 +1,33 @@
+.main {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  column-gap: 60px;
+}
+
+.aside {
+  padding-top: 80px;
+}
+
+.buttons {
+  margin-bottom: 80px;
+}
+
+.link {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 64px;
+}
+
+.link > p {
+  color: #8585ad;
+}
+
+.link :hover {
+  color: #f2f2f3;
+}
+
+.active > p {
+  color: #f2f2f3;
+}
